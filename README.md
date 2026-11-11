@@ -21,6 +21,9 @@ Both backtests price options with Black-Scholes on trailing realized volatility 
 - `paper_trading/log.csv` - every paper entry, exit and no-trade day, with the reason.
 - `paper_trading/gex/` - daily gamma-exposure snapshots built from Robinhood option quotes.
 - `skills/` - seven Claude skills from [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills), MIT licensed (see `skills/LICENSE-tradermonty`). Tests removed.
+- `.claude/agents/` - the research subagents as reusable Claude Code agents: `ticker-researcher`, `source-cross-checker`, `options-backtester`, `gamma-mapper`, `paper-trader`. All are read-only toward the broker.
+- `quant/formulas.py` - Black-Scholes, Greeks, implied vol, expected move, four realized-vol estimators, spread math and probabilities, GEX and zero-gamma flip, Kelly and losing-streak odds. `quant/test_formulas.py` checks them (`python3 quant/test_formulas.py` or pytest).
+- `docs/equations.md` - the math behind each function, with sources.
 - `automation/scheduled_tasks.md` - the scheduled tasks that run the paper test and manage open positions, with the account number removed.
 
 The large per-trade CSVs (about 80 MB) are not committed. Rerun the backtest scripts to regenerate them.
