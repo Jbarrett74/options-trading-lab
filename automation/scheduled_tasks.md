@@ -4,7 +4,8 @@ These run inside a Claude Code cloud session. The Robinhood account number is re
 
 ## Paper test, 2026-11-11 to 2026-11-24
 
-1. **Morning run, 10:07am ET.** Reads the Nikkei, Hang Seng and FTSE (FMP), builds gamma maps for SPY, QQQ and IWM, tests candidate spreads, and enters up to 3 paper spreads a day (1 per ticker).
+0. **Premarket briefing, 7:53am ET (from 2026-11-12).** Overnight Asia and London, VIX, premarket ETF prices, today's economic calendar and news, gamma maps on the day's fresh open interest, and a game plan per ticker. No paper entries, because option quotes before the 9:30am open are stale. Saved to `paper_trading/briefings/<date>.md`.
+1. **Morning run, 10:07am ET.** Starts from the briefing and checks whether its plan survived the open. Reads the Nikkei, Hang Seng and FTSE (FMP), builds gamma maps for SPY, QQQ and IWM, tests candidate spreads, and enters up to 3 paper spreads a day (1 per ticker).
    - Max loss $150 per spread, $450 total open.
    - Fills assume paying the ask on bought legs and receiving the bid on sold legs.
    - A candidate must pass four checks: (a) at least two of gamma regime, trend and overseas direction agree; (b) gain-to-risk at least 1.0; (c) each leg's bid/ask spread at most 10% of mid; (d) no major event before expiry unless the trade is built for it.
