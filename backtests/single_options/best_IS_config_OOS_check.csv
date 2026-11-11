@@ -1,0 +1,7 @@
+family,rule,exp_days,factor,delta,mode,exit,n_IS,mean_IS,n_OOS,mean_OOS,median_OOS,win_OOS,ruin_OOS,maxdd_OOS,random_same_cfg_mean_OOS
+uncapped_0.3/0.5,trend,30,1.0,0.3,uncapped,hold,341.0,0.392,126.0,-0.816,-1.0,0.064,1.0,240.0,-0.15
+uncapped_0.3/0.5,meanrev,30,1.0,0.3,uncapped,hold,146.0,0.294,56.0,0.404,-1.0,0.232,0.707,1719.014,-0.15
+uncapped_0.3/0.5,breakout,30,1.0,0.3,uncapped,hold,242.0,0.306,99.0,-0.417,-1.0,0.121,0.999,240.0,-0.15
+capped_$0.80,trend,7,1.0,cap,capped,hold,341.0,0.778,142.0,-0.235,-1.0,0.07,0.986,240.0,1.695
+capped_$0.80,meanrev,30,1.0,cap,capped,tp100,145.0,0.954,54.0,0.31,-1.0,0.333,0.604,1360.0,0.053
+capped_$0.80,breakout,30,1.0,cap,capped,hold,239.0,1.052,99.0,-0.499,-1.0,0.05,0.999,240.0,0.124

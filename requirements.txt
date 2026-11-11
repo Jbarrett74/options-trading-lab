@@ -1,0 +1,7 @@
+numpy
+pandas
+scipy
+pyyaml
+jsonschema
+pandas-market-calendars==5.2.2
+requests

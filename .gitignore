@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+trades_all.csv
+spread_trades_all.csv
+spread_trades_lowcost.csv
+reports/
+state/
