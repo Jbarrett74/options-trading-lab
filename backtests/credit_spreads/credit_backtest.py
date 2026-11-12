@@ -47,12 +47,12 @@ def skew_iv(base, K, S, T):
 
 def price(S, K, T, base, call): return bs(S, K, T, skew_iv(base, K, S, T), call)
 
-def vertical(S0, T0, b0, Sp, Tp, bp, call, D, W):
+def vertical(S0, T0, b0, Sp, Tp, bp, call, D, W, inc=1.0):
     """Short strike at |delta| ~ D, long strike W further out. Returns short K, net credit, cost-to-close path, settlement."""
     q = norm.ppf(D); v = b0.copy()
     for _ in range(4):
         K = S0 * np.exp((-q if call else q) * v * np.sqrt(T0) + (R + v * v / 2) * T0); v = skew_iv(b0, K, S0, T0)
-    Ks = np.round(K); Kl = Ks + W if call else Ks - W
+    Ks = np.round(K / inc) * inc; Kl = Ks + W if call else Ks - W
     ms0, ml0 = price(S0, Ks, T0, b0, call), price(S0, Kl, T0, b0, call)
     C = (ms0 - hs(ms0)) - (ml0 + hs(ml0)) - 2 * FEE
     msp, mlp = price(Sp, Ks[:, None], Tp, bp, call), price(Sp, Kl[:, None], Tp, bp, call)

@@ -45,9 +45,9 @@ def grid(tr):
     w = g.pivot_table(index=CFG + ['ivmode'], columns='seg', values=['n', 'win', 'mean_pnl', 'med_pnl', 'mean_ret', 'med_ret', 'worst', 'max_ml'], observed=True)
     w.columns = [f'{a}_{b}' for a, b in w.columns]; return w.reset_index()
 
-def boot_lo(pnl, dates, B=2000):
+def boot_lo(pnl, dates, B=2000, q=5):
     m = pd.Series(pnl).groupby(pd.DatetimeIndex(dates).to_period('M')).agg(['sum', 'count']).values
-    i = rng.integers(0, len(m), (B, len(m))); return float(np.percentile(m[i, 0].sum(1) / m[i, 1].sum(1), 5))
+    i = rng.integers(0, len(m), (B, len(m))); return float(np.percentile(m[i, 0].sum(1) / m[i, 1].sum(1), q))
 
 def select(tr, c, mode, seg=None):
     s = tr[(tr.symbol == c.symbol) & (tr.strat == c.strat) & (tr.delta == c.delta) & (tr.width == c.width) & (tr.dte == c.dte) & (tr.ivmode == mode)]
