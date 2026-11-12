@@ -36,6 +36,8 @@ Read this first when picking up the work.
 - Mirrors Fable's tested setups with real quotes. Entries only when the event filter allows (expiry before the Dec 9 FOMC and Dec 10 CPI) and the conservative credit is at least $0.03. Hold to expiry, except XLE (take profit at 50%).
 - Setups: SPY put 0.15 delta $1 wide ~21 days (always); XLU and EEM put 0.20 delta $1 wide ~21 days (high-vol rule); XLE call 0.10 delta $1 wide ~21 days.
 - Open: SPY 732/731 put spread exp 12/4, credit $0.049, max loss $95.08.
+- Width test (paper only, added 2026-11-12 at the user's request): SPY 732/729 (credit $0.259, max loss $274.08) and 732/727 (credit $0.439, max loss $456.08), both exp 12/4. The morning run adds 1-, 3- and 5-wide SPY entries each eligible day and compares P&L per $100 of risk.
+- Real-money cap recommendation (2026-11-12, account $440.55): $45 per trade, $65 only for a setup that passed backtest and paper, about $110 total open risk. The user has not confirmed a new cap. The NVDA spread uses about $80 of open risk.
 - Digest of all findings: `docs/findings.md`.
 
 ## Paper test (SPY, QQQ, IWM), 2026-11-11 to 2026-11-24
