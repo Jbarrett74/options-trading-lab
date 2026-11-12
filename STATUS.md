@@ -32,6 +32,12 @@ Read this first when picking up the work.
 - No real credit spread trade was proposed on 2026-11-12.
 - 20-ETF credit spread scan (max loss <= $100), 2026-11-12: 3 of 60 picks passed the backtest rule (EEM put 0.20 delta, XLU put 0.20 delta, XLE call 0.10 delta; all $1 wide, 21 days, event filter). All three had zero losing trades out of sample on 10-19 non-overlapping trades, so the tail is untested. Live check failed: EEM Dec 4 58/57 put spread paid $0.00 at bid/ask (legs $0.15-$0.19 wide, IV/RV 0.88); XLU Dec 4 43/42 paid $0.09 for $91 risk (IV/RV 0.94). No trade proposed. `backtests/credit_spreads/multi_etf_scan.py`
 
+## Credit arm of the paper test, 2026-11-12 to 2026-12-04
+- Mirrors Fable's tested setups with real quotes. Entries only when the event filter allows (expiry before the Dec 9 FOMC and Dec 10 CPI) and the conservative credit is at least $0.03. Hold to expiry, except XLE (take profit at 50%).
+- Setups: SPY put 0.15 delta $1 wide ~21 days (always); XLU and EEM put 0.20 delta $1 wide ~21 days (high-vol rule); XLE call 0.10 delta $1 wide ~21 days.
+- Open: SPY 732/731 put spread exp 12/4, credit $0.049, max loss $95.08.
+- Digest of all findings: `docs/findings.md`.
+
 ## Paper test (SPY, QQQ, IWM), 2026-11-11 to 2026-11-24
 - Ledger: `paper_trading/log.csv`. Briefings: `paper_trading/briefings/`. Gamma maps: `paper_trading/gex/`.
 - Open: SPY 758/756 put spread and QQQ 686/684 put spread, both exp 11/16, close by 1:15pm 11/13.

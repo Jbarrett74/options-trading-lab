@@ -1,0 +1,5 @@
+ticker,type,expiry,spot,short_K,short_bid,short_ask,short_delta,short_iv,short_oi,short_vol,long_K,long_bid,long_ask,long_delta,long_iv,long_oi,long_vol,width,cons_credit,mid_credit,max_loss_usd,max_gain_usd,breakeven,short_spread_pct,long_spread_pct,p_max_profit_rn,rule,rule_ok,rule_note,decision
+SPY,put,2026-12-04,762.54,732,2.67,2.71,-0.152505,0.1771,82,9,731,2.58,2.62,-0.14717,0.17859,20,2,1,0.0492,0.09,95.08,4.92,731.9508,0.015,0.015,0.834,always,True,,ENTER
+XLU,put,2026-12-04,43.9999,42.5,0.1,0.2,-0.163856,0.156686,155,0,41.5,0.03,0.13,-0.085722,0.183657,32,0,1.0,-0.0308,0.07,103.08,-3.08,42.5308,0.667,1.25,0.8268,highvol,True,rv20=0.1585 > med252=0.1528,SKIP (cons_credit<0.03)
+EEM,put,2026-12-04,61.38,58,0.57,0.72,-0.219825,0.327602,202,0,57,0.38,0.57,-0.168917,0.338778,298,0,1,-0.0008,0.17,100.08,-0.08,58.0008,0.233,0.4,0.7552,highvol,True,rv20=0.3272 > med252=0.2256,SKIP (cons_credit<0.03)
+XLE,call,2026-12-04,64.14,70,0.14,0.23,0.099771,0.261292,784,24,71,0.09,0.11,0.059562,0.252351,177,117,1,0.0292,0.085,97.08,2.92,70.0292,0.486,0.2,0.9118,always,True,,SKIP (cons_credit<0.03)

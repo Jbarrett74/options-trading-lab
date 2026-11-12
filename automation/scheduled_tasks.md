@@ -2,7 +2,9 @@
 
 These run inside a Claude Code cloud session. The Robinhood account number is replaced with `<ACCOUNT>`.
 
-## Paper test, 2026-11-11 to 2026-11-24
+## Paper test
+
+Directional arm (SPY/QQQ/IWM debit spreads) 2026-11-11 to 2026-11-24. Credit arm (Fable's credit spread setups on SPY, XLU, EEM, XLE, real quotes, conservative fills) 2026-11-12 to 2026-12-04. Morning and close runs now run weekdays through 2026-12-04; interim review 2026-11-24, final review 2026-12-04 4:31pm ET deletes the paper tasks.
 
 0. **Premarket briefing, 7:53am ET (from 2026-11-12).** Overnight Asia and London, VIX, premarket ETF prices, today's economic calendar and news, gamma maps on the day's fresh open interest, and a game plan per ticker. No paper entries, because option quotes before the 9:30am open are stale. Saved to `paper_trading/briefings/<date>.md`.
 1. **Morning run, 10:07am ET.** Starts from the briefing and checks whether its plan survived the open. Reads the Nikkei, Hang Seng and FTSE (FMP), builds gamma maps for SPY, QQQ and IWM, tests candidate spreads, and enters up to 3 paper spreads a day (1 per ticker).
