@@ -20,7 +20,7 @@ Read this first when picking up the work.
 
 ## Standing rules from the user
 - Every real position gets a take-profit at 2x the fill price.
-- Real trades: max loss $50 per trade normally ($100 was approved for the NVDA spread). Kill switch: stop after 3 losses in a row or a weekly realized loss over $60.
+- Real trades: max loss $45 per trade, $125 total open risk (set 2026-11-12; $100 was approved once for the NVDA spread). Kill switch: stop after 3 losses in a row or a weekly realized loss over $60.
 - Never close, cancel or change a real position without the user's explicit yes on that specific action.
 - The user does not want coin-flip trades.
 
@@ -37,7 +37,7 @@ Read this first when picking up the work.
 - Setups: SPY put 0.15 delta $1 wide ~21 days (always); XLU and EEM put 0.20 delta $1 wide ~21 days (high-vol rule); XLE call 0.10 delta $1 wide ~21 days.
 - Open: SPY 732/731 put spread exp 12/4, credit $0.049, max loss $95.08.
 - Width test (paper only, added 2026-11-12 at the user's request): SPY 732/729 (credit $0.259, max loss $274.08) and 732/727 (credit $0.439, max loss $456.08), both exp 12/4. The morning run adds 1-, 3- and 5-wide SPY entries each eligible day and compares P&L per $100 of risk.
-- Real-money cap recommendation (2026-11-12, account $440.55): $45 per trade, $65 only for a setup that passed backtest and paper, about $110 total open risk. The user has not confirmed a new cap. The NVDA spread uses about $80 of open risk.
+- Real-money cap recommendation (2026-11-12, account $440.55): $45 per trade, $65 only for a setup that passed backtest and paper, about $110 total open risk. CONFIRMED by the user 2026-11-12: $45 max loss per real trade, $125 total open real risk while the NVDA spread is open. Real trades are learning trades (debit spreads first). Each still needs the user's yes on the specific trade.
 - Digest of all findings: `docs/findings.md`.
 
 ## Paper test (SPY, QQQ, IWM), 2026-11-11 to 2026-11-24
