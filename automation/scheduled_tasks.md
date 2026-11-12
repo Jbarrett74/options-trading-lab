@@ -1,4 +1,4 @@
-# Scheduled tasks (as of 2026-11-11)
+# Scheduled tasks (as of 2026-11-12)
 
 These run inside a Claude Code cloud session. The Robinhood account number is replaced with `<ACCOUNT>`.
 
@@ -13,13 +13,14 @@ Directional arm (SPY/QQQ/IWM debit spreads) 2026-11-11 to 2026-11-24. Credit arm
    - A candidate must pass four checks: (a) at least two of gamma regime, trend and overseas direction agree; (b) gain-to-risk at least 1.0; (c) each leg's bid/ask spread at most 10% of mid; (d) no major event before expiry unless the trade is built for it.
 2. **Close mark, 3:37pm ET.** London close, whether the gamma walls held, paper exits.
    - Exit at +100% of debit or 80% of max value, stop at -50% of debit, close by 1:15pm ET the day before expiry.
-3. **Final review, 2026-11-24 4:23pm ET.** Summary and a plain verdict on real-money trading, then deletes the two paper tasks.
+   - Part B, credit arm: prices the SPY, XLU, EEM and XLE setups on live quotes, enters only if the event filter allows and the conservative credit is at least $0.03.
+3. **Directional arm review, 2026-11-24 4:23pm ET.** Summary of the SPY/QQQ/IWM arm. Deletes nothing.
+4. **Final review, 2026-12-04 4:31pm ET.** Both arms, a plain verdict on real-money trading, then deletes the premarket, morning and close tasks.
 
 ## Real positions
 
-- Hourly stop checks, Nov 16-20, 9:47am-3:47pm ET, for the NU calls (stop at mark $0.29) and the RGTI put (stop at mark $0.15).
-- Final-day sale, Nov 20 1:17pm ET, closes anything still open before Robinhood's 3:30pm sellout.
-- Every real position carries a GTC take-profit at 2x the fill price.
+- NVDA 170/172 call spread, exp 2026-12-18. Reminder 2026-12-17 11:47am ET to close before 1:15pm on 12/18. The take-profit ($1.60 credit, GTC) must be placed by the user in the app.
+- The KKR, NU and RGTI stop tasks and the Nov 20 final-sale task were deleted after those positions closed.
 
 ## Paused
 
