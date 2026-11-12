@@ -1,0 +1,2 @@
+date,ticker,action,structure,legs,price,max_loss,max_gain,pnl,reason
+2026-11-12,SPY,open,put debit spread exp 2026-11-20 x1,buy 760P @5.32 / sell 759P @4.95 (filled 12:50pm ET; placed by the user in the app),0.37 debit + $0.08 fees,37.08,62.92,,"First learning trade under the $45 cap. Partial offset to the NVDA call spread. No directional edge (this morning's bearish SPY plan was cancelled when SPY reclaimed 760). Plan: take profit GTC at 0.75, mental stop at 0.18 value, close by 1:15pm ET 11/20."
