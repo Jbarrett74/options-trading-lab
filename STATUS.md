@@ -27,7 +27,9 @@ Read this first when picking up the work.
 ## Research findings
 - Long single options (calls/puts <= $0.80) on AAPL/NVDA/SPY/MSFT/TSLA: no rule beat random out of sample. `backtests/single_options/`
 - Debit verticals <= $50: worse. `backtests/debit_spreads/`
-- Not yet tested: credit spreads / volatility risk premium on SPY and QQQ. This is the next test the user agreed to consider.
+- Credit spreads on SPY and QQQ (put, call, iron condor; 0.10-0.20 delta; 1-3 wide; 7-21 days), tested 2026-11-12: no setup passed out of sample. Selling every day averaged about zero return on risk at IV factor 1.2 and under a VIX-based IV, negative at 1.0, positive at 1.4. No timing rule beat random entry. Stop at 2x credit and close-1-day-early made results worse. The event filter (CPI, FOMC, NVDA) improved averages but left too few out-of-sample trades to pass. `backtests/credit_spreads/`
+- Costs measured on live SPY quotes 2026-11-12: OTM legs priced $1-$4 were $0.02-$0.04 wide. A $1-wide 15-delta SPY put spread, 15 days out, paid about $0.07 at bid/ask against about $93 max loss.
+- No real credit spread trade was proposed on 2026-11-12.
 
 ## Paper test (SPY, QQQ, IWM), 2026-11-11 to 2026-11-24
 - Ledger: `paper_trading/log.csv`. Briefings: `paper_trading/briefings/`. Gamma maps: `paper_trading/gex/`.

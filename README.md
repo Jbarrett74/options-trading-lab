@@ -10,6 +10,7 @@ This is research, not advice and not a signal service. Nothing here has shown a 
 |---|---|---|
 | Single long calls/puts, AAPL NVDA SPY MSFT TSLA | Daily bars 2024-08 to 2026-11, 136,170 simulated trades, last 30% held out | No rule beat a random-direction baseline out of sample. Median trade -50% to -100%. 87-100% of simulated $273 accounts went broke at $80 per trade. |
 | Debit vertical spreads costing $50 or less, same tickers | Same data and split | Worse than single options. 0% of configurations positive out of sample. 85-100% of simulated accounts fell below $50. |
+| Credit spreads (put, call, iron condor) on SPY and QQQ, 0.10-0.20 delta, 1-3 strikes wide, 7-21 days | Daily bars 2017-06 to 2026-11, 1.48M simulated trades, last 30% (from 2024-01-25) held out | No setup passed. Selling on every day averaged about zero return on risk out of sample at IV factor 1.2 and under a VIX-based IV, negative at 1.0, positive only at 1.4. No timing rule beat random entry. Stops and early exits made results worse. |
 | Paper test, SPY / QQQ / IWM spreads up to $150 max loss | Live Robinhood quotes, 2026-11-11 to 2026-11-24 | In progress. See `paper_trading/log.csv`. |
 
 Both backtests price options with Black-Scholes on trailing realized volatility times a premium factor (1.0, 1.2, 1.4) calibrated against a small sample of real Robinhood option prices. They have no volatility skew in the base case, use rule-of-thumb bid/ask costs, and cover a mostly rising market. Treat any positive cell as an upper bound.
@@ -18,6 +19,7 @@ Both backtests price options with Black-Scholes on trailing realized volatility 
 
 - `backtests/single_options/` - scripts and summary CSVs for the long call/put backtest. `raw_prices_daily.csv` is the input price history.
 - `backtests/debit_spreads/` - scripts and summary CSVs for the debit spread backtest. Reuses the pricing code in `single_options/backtest.py`.
+- `backtests/credit_spreads/` - credit spread backtest. `prep_data.py` builds `prices_daily.csv` and `events.csv`, `credit_backtest.py` simulates, `credit_analyze.py` writes the summaries and states the pass rule. Files tagged `_harshcost` use the older cost convention.
 - `paper_trading/log.csv` - every paper entry, exit and no-trade day, with the reason.
 - `paper_trading/gex/` - daily gamma-exposure snapshots built from Robinhood option quotes.
 - `skills/` - seven Claude skills from [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills), MIT licensed (see `skills/LICENSE-tradermonty`). Tests removed.

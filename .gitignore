@@ -5,3 +5,4 @@ spread_trades_all.csv
 spread_trades_lowcost.csv
 reports/
 state/
+credit_trades*.pkl
