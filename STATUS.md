@@ -12,6 +12,11 @@ Read this first when picking up the work.
 - Take-profit placed by the user 12:58pm ET at $1.60 credit but as a DAY order (gfd). It expires at the 11/12 close and must be re-entered as GTC. NVDA reports earnings 2026-11-17 after the close, inside this spread's life.
 - Reminder scheduled 2026-12-17 11:47am ET to close before 1:15pm on 12/18 (assignment risk on the short 172C).
 
+## Pending authorization (2026-11-15)
+- The user approved one conditional real order: TLT Dec 4 79/78 put debit spread, 1 contract, limit $0.39, to be placed Monday 2026-11-16 after a 9:47am ET re-price ONLY if the SPY 760/759 put spread has closed (so open risk stays under $125) and the debit at bid/ask is $0.39 or less. No XLF order. Scheduled in the Fable session; if that session is gone, nothing is placed.
+- As of 2026-11-15 the broker showed no working closing orders on the SPY or NVDA spreads. The 11/12 take-profits were day orders.
+- Broker preview on 2026-11-15 accepted agent multi-leg orders without customer approval (approval setting off).
+
 ## Closed this week (realized, before fees)
 | Trade | Result |
 |---|---|
