@@ -12,10 +12,12 @@ Read this first when picking up the work.
 - Take-profit placed by the user 12:58pm ET at $1.60 credit but as a DAY order (gfd). It expires at the 11/12 close and must be re-entered as GTC. NVDA reports earnings 2026-11-17 after the close, inside this spread's life.
 - Reminder scheduled 2026-12-17 11:47am ET to close before 1:15pm on 12/18 (assignment risk on the short 172C).
 
-## Pending authorization (2026-11-15)
-- The user approved one conditional real order: TLT Dec 4 79/78 put debit spread, 1 contract, limit $0.39, to be placed Monday 2026-11-16 after a 9:47am ET re-price ONLY if the SPY 760/759 put spread has closed (so open risk stays under $125) and the debit at bid/ask is $0.39 or less. No XLF order. Scheduled in the Fable session; if that session is gone, nothing is placed.
-- As of 2026-11-15 the broker showed no working closing orders on the SPY or NVDA spreads. The 11/12 take-profits were day orders.
-- Broker preview on 2026-11-15 accepted agent multi-leg orders without customer approval (approval setting off).
+## Execution protocol and limits (set by the user 2026-11-15, supersedes earlier approvals)
+- Research and paper only unless the execution protocol is met: live session, one exact order, a yes to the final live preview, approval expires after 10 minutes or any change. Scheduled tasks never call order tools. Earlier approvals never count. No real order to test broker permissions. A strategy must pass validation before any real order.
+- The conditional TLT approval recorded earlier on 2026-11-15 is VOID. The Monday 9:47am task was changed to read-only. TLT 79/78 and XLF 59/60 are not eligible: no validated hypothesis supports them.
+- Limits: $45 max loss per new trade, $125 combined open risk across positions and working orders. The NVDA 170/172 spread (max loss about $80) is a per-trade breach; the user decides, nothing is to be closed or changed.
+- As of 2026-11-15 4:35pm ET the broker showed no working option orders. The 11/12 take-profits were day orders.
+- Phase 0 audit: `docs/phase0_audit_2026-11-15.md`. Waiting at Gate 1.
 
 ## Closed this week (realized, before fees)
 | Trade | Result |
