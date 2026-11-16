@@ -19,6 +19,7 @@ Read this first when picking up the work.
 - As of 2026-11-15 4:35pm ET the broker showed no working option orders. The 11/12 take-profits were day orders.
 - Phase 0 audit: `docs/phase0_audit_2026-11-15.md`. Gate 1 passed 2026-11-15: the user approved the task clean-up.
 - Done 2026-11-15: real SPY check and premarket briefing set to weekdays; the NVDA closing task with an order step paused and replaced by a read-only alert (Dec 17, research session); TLT/XLF re-price task deleted; structured ledger `paper_trading/ledger_v2.csv` (backfilled, 14 rows) and chain snapshot tool `paper_trading/snapshot.py` with 174 verified contracts added; `automation/scheduled_tasks.md` rewritten.
+- Phase 1 done 2026-11-16: `paper_trading/rule_registry.csv` (34 rules with dates and timing class), `quant/power.py`, report `docs/phase1_forward_test_2026-11-16.md`. Directional arm: 6 closed, 5 wins, +$95.12 at worst-side fills, all five wins from two bearish entry days; no conclusion (t = 0.30 on 3 independent bets). Credit arm: 0 closed, will end with about 2. Registry rules are frozen as version 1; any change is a new version with its own trade count.
 - NOT done: routine prompts can only be edited from the paper desk conversation. The exact text to apply is in `docs/desk_prompt_changes_2026-11-15.md` (morning and close mark prompts, then drop the 3:47pm SPY check).
 
 ## Closed this week (realized, before fees)
