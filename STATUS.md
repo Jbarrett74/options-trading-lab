@@ -7,7 +7,7 @@ Read this first when picking up the work.
 - Trade approvals: OFF (changed 2026-11-12 9:50am ET). Agent single-leg orders go through. Agent MULTI-LEG orders are still rejected with "requires the customer to approve agent-placed trades" despite the setting. The user places spreads in the app.
 
 ## Open real positions
-- SPY 760/759 put debit spread, exp 2026-11-20, filled 2026-11-12 12:50pm ET at 0.37 (long 760P at 5.32, short 759P at 4.95). Max loss $37.08, max gain $62.92, breakeven 759.63. Take-profit GTC at 0.75 to be placed by the user. Mental stop 0.18. Close by 1:15pm 11/20. Read-only checks 10:47, 12:47, 3:47pm ET Nov 13-20. Ledger: paper_trading/real_trades.csv.
+- SPY 760/759 put debit spread: CLOSED 2026-11-16 12:55pm ET at 0.81 credit (opened 0.37), realized +$43.84. A second, opening order for the same spread (buy 760P / sell 759P, 0.75 debit, GFD) was working at 12:56pm; flagged to the user, not touched.
 - NVDA 170/172 call debit spread, exp 2026-12-18, bought 2026-11-12 for $0.80 (long 170C at 8.52, short 172C at 7.72). Max loss ~$80, max gain ~$120, breakeven ~$170.80.
 - Take-profit: user needs to place it in the app (close spread, $1.60 credit, GTC). Agent attempts were rejected.
 - Reminder scheduled 2026-12-17 11:47am ET to close before 1:15pm on 12/18 (assignment risk on the short 172C).
