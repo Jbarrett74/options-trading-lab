@@ -1,0 +1,73 @@
+id,dataset,symbol,check,severity,count,first,last,detail
+P001,prices_daily,ALL,calendar_ohlc_stale_scan,INFO,2,2017-06-01,2026-11-11,"2 symbols scanned, 2 with no calendar, OHLC or stale-bar problem"
+P002,prices_multi,ALL,calendar_ohlc_stale_scan,INFO,20,2017-06-01,2026-11-11,"20 symbols scanned, 20 with no calendar, OHLC or stale-bar problem"
+P003,raw_prices_daily,ALL,calendar_ohlc_stale_scan,INFO,5,2024-08-01,2026-11-10,"5 symbols scanned, 5 with no calendar, OHLC or stale-bar problem"
+P004,rh_raw_2026-11-16,ALL,calendar_ohlc_stale_scan,INFO,26,2017-06-01,2026-11-13,"26 symbols scanned, 26 with no calendar, OHLC or stale-bar problem"
+P005,fmp_index_daily,^RUT,row_on_non_session,HIGH,1,2025-04-26,2025-04-26,"row dated on a weekend, holiday or closure"
+P006,fmp_index_daily,^RUT,repeated_bar,MED,1,2024-07-03,2024-07-03,bar equals the previous bar in every price field
+P007,fmp_index_daily,ALL,calendar_ohlc_stale_scan,INFO,2,2017-06-01,2026-11-13,"3 symbols scanned, 2 with no calendar, OHLC or stale-bar problem"
+P008,prices_multi,SMH,stored_vs_fresh_pull,MED,3,2019-12-11,2019-12-13,"stored split-adjusted close differs from fresh raw close / split ratio by more than $0.011, max 1.038 (1.5% of price) on: 2019-12-11 2019-12-12 2019-12-13"
+P009,prices_daily,SPY,cross_source_close,MED,43,2019-07-16,2024-07-16,"FMP vs Robinhood raw on 2376 dates, max abs diff 4.080, share equal by date shift {-1: 0.005050505050505051, 0: 0.9819023569023569, 1: 0.0054736842105263155}"
+P010,raw_prices_daily,AAPL,split_in_sample,MED,1,2020-08-31,2020-08-31,"4-for-1 split. Stored prices before this date are divided by 4, so modeled $1 strikes and dollar costs before it are not the strikes or costs that traded"
+P011,raw_prices_daily,NVDA,split_in_sample,MED,1,2021-07-20,2021-07-20,"4-for-1 split. Stored prices before this date are divided by 4, so modeled $1 strikes and dollar costs before it are not the strikes or costs that traded"
+P012,raw_prices_daily,NVDA,split_in_sample,MED,1,2024-06-10,2024-06-10,"10-for-1 split. Stored prices before this date are divided by 10, so modeled $1 strikes and dollar costs before it are not the strikes or costs that traded"
+P013,prices_multi,SMH,split_in_sample,MED,1,2023-05-05,2023-05-05,"2-for-1 split. Stored prices before this date are divided by 2, so modeled $1 strikes and dollar costs before it are not the strikes or costs that traded"
+P014,raw_prices_daily,TSLA,split_in_sample,MED,1,2020-08-31,2020-08-31,"5-for-1 split. Stored prices before this date are divided by 5, so modeled $1 strikes and dollar costs before it are not the strikes or costs that traded"
+P015,raw_prices_daily,TSLA,split_in_sample,MED,1,2022-08-25,2022-08-25,"3-for-1 split. Stored prices before this date are divided by 3, so modeled $1 strikes and dollar costs before it are not the strikes or costs that traded"
+P016,prices_multi,USO,split_in_sample,MED,1,2020-04-29,2020-04-29,"0.125-for-1 split. Stored prices before this date are divided by 0.125, so modeled $1 strikes and dollar costs before it are not the strikes or costs that traded"
+P017,prices_multi,XLE,split_in_sample,MED,1,2025-12-05,2025-12-05,"2-for-1 split. Stored prices before this date are divided by 2, so modeled $1 strikes and dollar costs before it are not the strikes or costs that traded"
+P018,prices_multi,XLK,split_in_sample,MED,1,2025-12-05,2025-12-05,"2-for-1 split. Stored prices before this date are divided by 2, so modeled $1 strikes and dollar costs before it are not the strikes or costs that traded"
+P019,prices_multi,XLU,split_in_sample,MED,1,2025-12-05,2025-12-05,"2-for-1 split. Stored prices before this date are divided by 2, so modeled $1 strikes and dollar costs before it are not the strikes or costs that traded"
+P020,raw_prices_daily,AAPL,cross_pull_close,INFO,0,,,"stored vs fresh raw pull on 572 dates, max abs diff 0.000, implied splits []"
+P021,raw_prices_daily,MSFT,cross_pull_close,INFO,0,,,"stored vs fresh raw pull on 572 dates, max abs diff 0.000, implied splits []"
+P022,raw_prices_daily,NVDA,cross_pull_close,INFO,0,,,"stored vs fresh raw pull on 572 dates, max abs diff 0.000, implied splits []"
+P023,raw_prices_daily,SPY,cross_pull_close,INFO,0,,,"stored vs fresh raw pull on 572 dates, max abs diff 0.000, implied splits []"
+P024,raw_prices_daily,TSLA,cross_pull_close,INFO,0,,,"stored vs fresh raw pull on 572 dates, max abs diff 0.000, implied splits []"
+P025,prices_multi,FXI,one_day_move_over_15pct,INFO,1,2022-03-16,2022-03-16,"present in the raw series too, so real moves: 2022-03-16(+21%)"
+P026,prices_multi,GDX,one_day_move_over_15pct,INFO,3,2020-03-13,2020-03-18,"present in the raw series too, so real moves: 2020-03-13(-15%) 2020-03-16(+18%) 2020-03-18(-23%)"
+P027,prices_multi,KRE,one_day_move_over_15pct,INFO,1,2020-03-09,2020-03-09,"present in the raw series too, so real moves: 2020-03-09(-15%)"
+P028,prices_multi,SLV,one_day_move_over_15pct,INFO,2,2026-01-30,2026-02-05,"present in the raw series too, so real moves: 2026-01-30(-29%) 2026-02-05(-16%)"
+P029,prices_multi,SMH,one_day_move_over_15pct,INFO,2,2020-03-16,2025-04-09,"present in the raw series too, so real moves: 2020-03-16(-14%) 2025-04-09(+17%)"
+P030,prices_multi,USO,one_day_move_over_15pct,INFO,5,2020-03-09,2020-04-27,"present in the raw series too, so real moves: 2020-03-09(-25%) 2020-03-18(-18%) 2020-04-02(+17%) 2020-04-21(-25%) 2020-04-27(-15%)"
+P031,prices_multi,XLE,one_day_move_over_15pct,INFO,2,2020-03-09,2020-03-18,"present in the raw series too, so real moves: 2020-03-09(-20%) 2020-03-18(-14%)"
+P032,prices_daily,SPY,return_vs_index,MED,5,2020-03-13,2026-06-26,"stored close vs FMP ^GSPC on 2376 days: residual sd 0.085%, days over 0.6%: 2020-03-13(-0.74%) 2020-03-16(+1.04%) 2025-04-09(+0.99%) 2025-04-10(-0.92%) 2026-06-26(-0.68%)"
+P033,rh_raw_2026-11-16,SPY,return_vs_index,MED,8,2020-03-13,2026-06-26,"robinhood_raw close vs FMP ^GSPC on 2378 days: residual sd 0.092%, days over 0.6%: 2020-03-13(-0.74%) 2020-03-16(+1.04%) 2022-09-22(+1.08%) 2022-09-23(-1.01%) 2024-02-14(-0.66%) 2025-04-09(+0.99%) 2025-04-10(-0.92%) 2026-06-26(-0.68%)"
+P034,prices_multi,IWM,return_vs_index,MED,7,2020-03-13,2024-02-20,"stored close vs FMP ^RUT on 2376 days: residual sd 0.135%, days over 0.6%: 2020-03-13(-1.07%) 2020-03-16(+1.01%) 2020-03-17(-2.08%) 2020-03-18(+2.67%) 2020-03-19(-2.92%) 2020-03-20(+1.86%) 2024-02-20(+0.63%)"
+P035,prices_multi,DIA,return_vs_index,INFO,0,,,"stored close vs FMP ^DJI on 2376 days: residual sd 0.060%, days over 0.6%: none"
+P036,prices_multi,ALL,single_source_prices,MED,19,,,"QQQ and 18 of the 20 ETFs come from Robinhood only. FMP refuses them, so their closes have no second source. The SPY comparison shows what to expect: Robinhood disagreed with FMP on 43 of 2376 closes, 2 of them by more than $3"
+P037,rh_raw_2026-11-16,SPY,bad_close_in_robinhood,HIGH,2,2022-09-22,2024-02-13,"Robinhood close differs from FMP by more than $1 and equals the day high: 2022-09-22 rh 378.3 fmp 374.22 high 378.3 2024-02-13 rh 497.09 fmp 494.08 high 497.09. FMP agrees with the S&P 500 index on both days. The stored SPY file uses FMP, so SPY backtests are unaffected; QQQ and the ETFs have no such check"
+P038,prices_daily,SPY,dividends_not_in_prices,LOW,38,2017-06-16,2026-09-18,"38 ex-dividend dates, mean 0.39% of price each, about 1.57% a year. Prices are split-adjusted only. Option models here use no dividend yield, which overprices calls and underprices puts slightly"
+P039,prices_multi,ALL,dividends_unknown,MED,20,,,"FMP returns no dividend history for the 20 ETFs or QQQ on this plan. TLT and HYG pay monthly and USO, GLD, SLV pay nothing; ex-dividend drops are untested for every ETF except SPY. No early-assignment modelling is possible without ex-dates"
+P040,prices_daily,VIX,vix_forward_fill,LOW,11,,,"0 missing, 11 days equal to the prior day (prep_data.py forward-fills gaps, so a repeat can be a real tie or a filled gap; range 9.14 to 82.69)"
+P041,prices_multi,ALL,universe_chosen_with_hindsight,MED,20,,,all 20 ETFs have 2376 to 2376 rows: the list was picked in 2026-11 from funds alive and liquid today. Funds that closed or lost liquidity since 2017 are absent. Single-ticker results are not affected. Any claim across the universe is
+P042,raw_prices_daily,ALL,universe_chosen_with_hindsight,MED,5,,,"AAPL, NVDA, MSFT, TSLA were picked as large winners known in 2026; a long-call test on them inherits that choice"
+P043,real_option_sample,ALL,interpolated_option_bars,MED,1180,2025-05-01,2026-10-16,1180 of 1802 daily option bars are flagged interpolated by Robinhood (no trade that day); these carry no price information
+P044,real_option_sample,ALL,bar_after_expiration,LOW,666,2025-06-23,2026-10-16,Robinhood returns bars dated after expiry; 666 of 666 are flagged interpolated. fetch_option_sample.py drops interpolated bars before use
+P045,real_option_sample,ALL,no_bid_ask_history,HIGH,1802,,,"Robinhood option history is trade-based OHLC per contract. It has no bid, ask, size, volume, open interest or implied volatility. No reachable source has them, so option backtests cannot fill at observed quotes"
+P046,chain_2026-11-16_1353.csv,"EEM,IWM,TLT,XLF,XLU",wide_quote,MED,42,2026-11-16,2026-11-16,bid-ask wider than 10% of the mid
+P047,chain_2026-11-16_1353.csv,TLT,iv_missing,MED,2,2026-11-16,2026-11-16,no implied volatility returned
+P048,chain_2026-11-16_1353.csv,TLT,gamma_missing,MED,2,2026-11-16,2026-11-16,no gamma returned
+P049,chain_2026-11-16_1353.csv,"EEM,IWM,QQQ,SPY,TLT,XLE,XLF,XLU",zero_volume_today,LOW,18,2026-11-16,2026-11-16,no trades yet in this session
+P050,chain_2026-11-16_1353.csv,EEM,observed_half_spread_vs_cost_model,HIGH,6,,,"6 contracts with 0.05 to 0.35 delta: observed half-spread median $0.083, backtest charges $0.020, median ratio 4.13. One snapshot, on a day SPY fell 1.7%"
+P051,chain_2026-11-16_1353.csv,IWM,observed_half_spread_vs_cost_model,INFO,6,,,"6 contracts with 0.05 to 0.35 delta: observed half-spread median $0.030, backtest charges $0.044, median ratio 0.53. One snapshot, on a day SPY fell 1.7%"
+P052,chain_2026-11-16_1353.csv,NVDA,observed_half_spread_vs_cost_model,INFO,8,,,"8 contracts with 0.05 to 0.35 delta: observed half-spread median $0.045, backtest charges $0.056, median ratio 0.70. One snapshot, on a day SPY fell 1.7%"
+P053,chain_2026-11-16_1353.csv,QQQ,observed_half_spread_vs_cost_model,INFO,7,,,"7 contracts with 0.05 to 0.35 delta: observed half-spread median $0.050, backtest charges $0.073, median ratio 0.50. One snapshot, on a day SPY fell 1.7%"
+P054,chain_2026-11-16_1353.csv,SPY,observed_half_spread_vs_cost_model,INFO,7,,,"7 contracts with 0.05 to 0.35 delta: observed half-spread median $0.030, backtest charges $0.058, median ratio 0.38. One snapshot, on a day SPY fell 1.7%"
+P055,chain_2026-11-16_1353.csv,TLT,observed_half_spread_vs_cost_model,INFO,8,,,"8 contracts with 0.05 to 0.35 delta: observed half-spread median $0.010, backtest charges $0.020, median ratio 0.50. One snapshot, on a day SPY fell 1.7%"
+P056,chain_2026-11-16_1353.csv,XLE,observed_half_spread_vs_cost_model,INFO,6,,,"6 contracts with 0.05 to 0.35 delta: observed half-spread median $0.015, backtest charges $0.020, median ratio 0.75. One snapshot, on a day SPY fell 1.7%"
+P057,chain_2026-11-16_1353.csv,XLF,observed_half_spread_vs_cost_model,INFO,7,,,"7 contracts with 0.05 to 0.35 delta: observed half-spread median $0.025, backtest charges $0.020, median ratio 1.25. One snapshot, on a day SPY fell 1.7%"
+P058,chain_2026-11-16_1353.csv,XLU,observed_half_spread_vs_cost_model,INFO,5,,,"5 contracts with 0.05 to 0.35 delta: observed half-spread median $0.015, backtest charges $0.020, median ratio 0.75. One snapshot, on a day SPY fell 1.7%"
+P059,chain_2026-11-16_1353.csv,ALL,snapshot_scan,INFO,174,,,"174 contracts, median bid-ask 3.9% of mid, 90th percentile 18.7%, oldest quote 2.1 min"
+P060,ledger_v2,,timestamp_unparseable,MED,1,,,not YYYY-MM-DD HH:MM
+P061,ledger_v2,ALL,quote_timestamp_missing,MED,18,,,"18 of 18 rows have no quote_ts_utc (rows backfilled from log.csv, which stored no quote time)"
+P062,log.csv,ALL,no_time_of_day,MED,58,2026-11-11,2026-11-16,log.csv has a date column only; entry and exit times live in free text. ledger_v2.csv replaces it
+P063,events.csv,CPI,event_on_non_session,LOW,1,2020-04-10,2020-04-10,dates: 2020-04-10
+P064,events.csv,FOMC,event_count_per_year,MED,1,,,"expected 8 per year, got 2020:7"
+P065,events.csv,CPI,event_count_per_year,MED,1,,,"expected 12 per year, got 2025:11"
+P066,events_v2.csv,CPI,event_on_non_session,LOW,1,2020-04-10,2020-04-10,dates: 2020-04-10
+P067,events_v2.csv,FOMC_unscheduled,event_on_non_session,LOW,1,2020-03-15,2020-03-15,dates: 2020-03-15
+P068,events_v2.csv,CPI,event_count_per_year,MED,1,,,"expected 12 per year, got 2025:11"
+P069,events_v2.csv,CPI,event_date_unverified,MED,98,2017-07-14,2026-11-10,"98 of 113 dates typed from memory or from a third-party calendar, not checked against a primary source"
+P070,events_v2.csv,FOMC,event_date_unverified,MED,9,2019-03-20,2026-10-28,"9 of 77 dates typed from memory or from a third-party calendar, not checked against a primary source"
+P071,events_v2.csv,FOMC_unscheduled,event_date_unverified,MED,2,2020-03-03,2020-03-15,"2 of 2 dates typed from memory or from a third-party calendar, not checked against a primary source"
+P072,events_v2.csv,NVDA_earnings_reaction,event_date_unverified,MED,31,2017-08-11,2025-02-27,"31 of 38 dates typed from memory or from a third-party calendar, not checked against a primary source"

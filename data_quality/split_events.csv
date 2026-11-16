@@ -1,0 +1,11 @@
+symbol,effective_date,factor,source
+AAPL,2020-08-31,4.0,FMP splits
+NVDA,2021-07-20,4.0,FMP splits
+NVDA,2024-06-10,10.0,FMP splits
+SMH,2023-05-05,2.0,robinhood raw vs stored adjusted
+TSLA,2020-08-31,5.0,FMP splits
+TSLA,2022-08-25,3.0,FMP splits
+USO,2020-04-29,0.125,robinhood raw vs stored adjusted
+XLE,2025-12-05,2.0,robinhood raw vs stored adjusted
+XLK,2025-12-05,2.0,robinhood raw vs stored adjusted
+XLU,2025-12-05,2.0,robinhood raw vs stored adjusted

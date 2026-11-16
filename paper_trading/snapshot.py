@@ -85,7 +85,8 @@ def main():
     spots = dict(kv.split('=') for kv in a.spots.split(',') if '=' in kv)
     now = dt.datetime.now(dt.timezone.utc); rows = build_rows(load_quotes(a.quotes), spots, a.run_id, now); report(rows)
     if a.cmd == 'ingest':
-        et = now.astimezone(dt.timezone(dt.timedelta(hours=-5)))        # EST; the file name is a label, timestamps inside are UTC
+        from zoneinfo import ZoneInfo
+        et = now.astimezone(ZoneInfo('America/New_York'))               # US Eastern with daylight saving; timestamps inside the file are UTC
         out = os.path.join(DIR, f"chain_{et.strftime('%Y-%m-%d_%H%M')}.csv")
         with open(out, 'w', newline='') as f:
             w = csv.DictWriter(f, fieldnames=OUT_FIELDS); w.writeheader(); w.writerows(rows)

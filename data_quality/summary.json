@@ -1,0 +1,225 @@
+{
+ "SPY_fmp_vs_robinhood": {
+  "n_common": 2376,
+  "n_diff": 43,
+  "max_abs_diff": 4.079999999999984,
+  "first_diff": "2019-07-16",
+  "last_diff": "2024-07-16",
+  "match_by_lag": {
+   "-1": 0.005050505050505051,
+   "0": 0.9819023569023569,
+   "1": 0.0054736842105263155
+  },
+  "best_lag": 0
+ },
+ "splits": [
+  {
+   "symbol": "AAPL",
+   "effective_date": "2020-08-31",
+   "factor": 4.0,
+   "source": "FMP splits"
+  },
+  {
+   "symbol": "NVDA",
+   "effective_date": "2021-07-20",
+   "factor": 4.0,
+   "source": "FMP splits"
+  },
+  {
+   "symbol": "NVDA",
+   "effective_date": "2024-06-10",
+   "factor": 10.0,
+   "source": "FMP splits"
+  },
+  {
+   "symbol": "SMH",
+   "effective_date": "2023-05-05",
+   "factor": 2.0,
+   "source": "robinhood raw vs stored adjusted"
+  },
+  {
+   "symbol": "TSLA",
+   "effective_date": "2020-08-31",
+   "factor": 5.0,
+   "source": "FMP splits"
+  },
+  {
+   "symbol": "TSLA",
+   "effective_date": "2022-08-25",
+   "factor": 3.0,
+   "source": "FMP splits"
+  },
+  {
+   "symbol": "USO",
+   "effective_date": "2020-04-29",
+   "factor": 0.125,
+   "source": "robinhood raw vs stored adjusted"
+  },
+  {
+   "symbol": "XLE",
+   "effective_date": "2025-12-05",
+   "factor": 2.0,
+   "source": "robinhood raw vs stored adjusted"
+  },
+  {
+   "symbol": "XLK",
+   "effective_date": "2025-12-05",
+   "factor": 2.0,
+   "source": "robinhood raw vs stored adjusted"
+  },
+  {
+   "symbol": "XLU",
+   "effective_date": "2025-12-05",
+   "factor": 2.0,
+   "source": "robinhood raw vs stored adjusted"
+  }
+ ],
+ "SPY_stored_vs_^GSPC": {
+  "n": 2376,
+  "resid_sd_pct": 0.08467454736206015,
+  "n_over_0p6pct": 5,
+  "dates": [
+   "2020-03-13(-0.74%)",
+   "2020-03-16(+1.04%)",
+   "2025-04-09(+0.99%)",
+   "2025-04-10(-0.92%)",
+   "2026-06-26(-0.68%)"
+  ]
+ },
+ "SPY_robinhood_raw_vs_^GSPC": {
+  "n": 2378,
+  "resid_sd_pct": 0.09187700143978342,
+  "n_over_0p6pct": 8,
+  "dates": [
+   "2020-03-13(-0.74%)",
+   "2020-03-16(+1.04%)",
+   "2022-09-22(+1.08%)",
+   "2022-09-23(-1.01%)",
+   "2024-02-14(-0.66%)",
+   "2025-04-09(+0.99%)",
+   "2025-04-10(-0.92%)",
+   "2026-06-26(-0.68%)"
+  ]
+ },
+ "IWM_stored_vs_^RUT": {
+  "n": 2376,
+  "resid_sd_pct": 0.13542102977238868,
+  "n_over_0p6pct": 7,
+  "dates": [
+   "2020-03-13(-1.07%)",
+   "2020-03-16(+1.01%)",
+   "2020-03-17(-2.08%)",
+   "2020-03-18(+2.67%)",
+   "2020-03-19(-2.92%)",
+   "2020-03-20(+1.86%)",
+   "2024-02-20(+0.63%)"
+  ]
+ },
+ "DIA_stored_vs_^DJI": {
+  "n": 2376,
+  "resid_sd_pct": 0.05999753382315572,
+  "n_over_0p6pct": 0,
+  "dates": []
+ },
+ "SPY_dividends": {
+  "n": 38,
+  "mean_pct_per_ex_date": 0.3909795635563101,
+  "max_pct": 0.6143181818181818,
+  "annual_pct": 1.573398006233823
+ },
+ "chain_2026-11-16_1353.csv": {
+  "n": 174,
+  "median_rel_spread": 0.03916083916083913,
+  "p90_rel_spread": 0.18739462063428342,
+  "max_age_min": 2.1,
+  "rel_by_ticker": {
+   "EEM": 0.1795,
+   "IWM": 0.0206,
+   "NVDA": 0.0152,
+   "QQQ": 0.0082,
+   "SPY": 0.0098,
+   "TLT": 0.0308,
+   "XLE": 0.0508,
+   "XLF": 0.1115,
+   "XLU": 0.0916
+  }
+ },
+ "chain_2026-11-16_1353.csv_cost_vs_model": [
+  {
+   "ticker": "EEM",
+   "n": 6,
+   "obs_half_median": 0.0825,
+   "model_half_median": 0.02,
+   "ratio": 4.125
+  },
+  {
+   "ticker": "IWM",
+   "n": 6,
+   "obs_half_median": 0.03,
+   "model_half_median": 0.0445,
+   "ratio": 0.5295
+  },
+  {
+   "ticker": "NVDA",
+   "n": 8,
+   "obs_half_median": 0.045,
+   "model_half_median": 0.056,
+   "ratio": 0.7028
+  },
+  {
+   "ticker": "QQQ",
+   "n": 7,
+   "obs_half_median": 0.05,
+   "model_half_median": 0.0734,
+   "ratio": 0.4995
+  },
+  {
+   "ticker": "SPY",
+   "n": 7,
+   "obs_half_median": 0.03,
+   "model_half_median": 0.0583,
+   "ratio": 0.3786
+  },
+  {
+   "ticker": "TLT",
+   "n": 8,
+   "obs_half_median": 0.01,
+   "model_half_median": 0.02,
+   "ratio": 0.5
+  },
+  {
+   "ticker": "XLE",
+   "n": 6,
+   "obs_half_median": 0.015,
+   "model_half_median": 0.02,
+   "ratio": 0.75
+  },
+  {
+   "ticker": "XLF",
+   "n": 7,
+   "obs_half_median": 0.025,
+   "model_half_median": 0.02,
+   "ratio": 1.25
+  },
+  {
+   "ticker": "XLU",
+   "n": 5,
+   "obs_half_median": 0.015,
+   "model_half_median": 0.02,
+   "ratio": 0.75
+  }
+ ],
+ "events_v2_verification": {
+  "CPI|memory_unverified": 96,
+  "CPI|third_party_2026-11-16": 2,
+  "CPI|user_brief": 1,
+  "CPI|web_search_2026-11-12": 6,
+  "CPI|web_search_2026-11-16": 8,
+  "FOMC|memory_unverified": 9,
+  "FOMC|user_brief": 1,
+  "FOMC|web_search_2026-11-16": 67,
+  "FOMC_unscheduled|memory_unverified": 2,
+  "NVDA_earnings_reaction|memory_unverified": 31,
+  "NVDA_earnings_reaction|robinhood_2026-11-16": 7
+ }
+}
