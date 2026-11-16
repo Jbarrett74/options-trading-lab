@@ -1,32 +1,36 @@
-# Scheduled tasks (as of 2026-11-12)
+# Scheduled tasks (as of 2026-11-15, evening)
 
-These run inside a Claude Code cloud session. The Robinhood account number is replaced with `<ACCOUNT>`.
+These run inside Claude Code cloud sessions. The account number is not written here.
+No scheduled task may place, cancel or change a real order (user's execution protocol, 2026-11-15). That rule lives
+in the prompt text; the session still has the broker's order tools. The broker-side lock is the trade approval
+setting in the Robinhood app.
 
-## Paper test
+## Paper desk session
 
-Directional arm (SPY/QQQ/IWM debit spreads) 2026-11-11 to 2026-11-24. Credit arm (Fable's credit spread setups on SPY, XLU, EEM, XLE, real quotes, conservative fills) 2026-11-12 to 2026-12-04. Morning and close runs now run weekdays through 2026-12-04; interim review 2026-11-24, final review 2026-12-04 4:31pm ET deletes the paper tasks.
+| Task | Schedule (ET) | What it does |
+|---|---|---|
+| Paper test premarket briefing | 7:53am, Nov 16-20, 23, 24 | Overnight markets, calendar, gamma maps, game plan. No entries. |
+| SPY paper spread morning | 10:07am weekdays, self-skips after Dec 4 | Directional arm entries (through Nov 24), credit arm and width test entries, marks. |
+| SPY 760/759 put spread stop check | 10:47am, 12:47pm, 3:47pm, Nov 16-20 | Read-only check of the real SPY spread. The 3:47pm run moves into the close mark once `docs/desk_prompt_changes_2026-11-15.md` is applied. |
+| SPY paper spread close mark | 3:37pm weekdays, self-skips after Dec 4 | Marks, exits, settlements. After the prompt change: real SPY check and the daily chain snapshot. |
+| Paper test directional arm review | Nov 24, 4:23pm | Summary of the directional arm. |
+| Paper test final review | Dec 4, 4:31pm | Both arms; deletes the premarket, morning and close tasks. |
+| Close NVDA Dec 170/172 call spread | PAUSED 2026-11-15 | Carried an order step. Replaced by the research session alert below. |
+| Daily options trade proposal | DISABLED since 2026-11-11 | Retired. Prompt still holds an old order step and a $50 cap; it does not run. |
 
-0. **Premarket briefing, 7:53am ET (from 2026-11-12).** Overnight Asia and London, VIX, premarket ETF prices, today's economic calendar and news, gamma maps on the day's fresh open interest, and a game plan per ticker. No paper entries, because option quotes before the 9:30am open are stale. Saved to `paper_trading/briefings/<date>.md`.
-1. **Morning run, 10:07am ET.** Starts from the briefing and checks whether its plan survived the open. Reads the Nikkei, Hang Seng and FTSE (FMP), builds gamma maps for SPY, QQQ and IWM, tests candidate spreads, and enters up to 3 paper spreads a day (1 per ticker).
-   - Max loss $150 per spread, $450 total open.
-   - Fills assume paying the ask on bought legs and receiving the bid on sold legs.
-   - A candidate must pass four checks: (a) at least two of gamma regime, trend and overseas direction agree; (b) gain-to-risk at least 1.0; (c) each leg's bid/ask spread at most 10% of mid; (d) no major event before expiry unless the trade is built for it.
-2. **Close mark, 3:37pm ET.** London close, whether the gamma walls held, paper exits.
-   - Exit at +100% of debit or 80% of max value, stop at -50% of debit, close by 1:15pm ET the day before expiry.
-   - Part B, credit arm: prices the SPY, XLU, EEM and XLE setups on live quotes, enters only if the event filter allows and the conservative credit is at least $0.03.
-3. **Directional arm review, 2026-11-24 4:23pm ET.** Summary of the SPY/QQQ/IWM arm. Deletes nothing.
-4. **Final review, 2026-12-04 4:31pm ET.** Both arms, a plain verdict on real-money trading, then deletes the premarket, morning and close tasks.
+Paper limits: directional $150 per spread and $450 open; credit arm $1 wide; width test up to $466. These exceed the
+real limits ($45 per trade, $125 open), so results are also reported per $100 of risk and flagged in ledger_v2.csv.
 
-## Real positions
+## Research session
 
-- NVDA 170/172 call spread, exp 2026-12-18. Reminder 2026-12-17 11:47am ET to close before 1:15pm on 12/18. The take-profit ($1.60 credit, GTC) must be placed by the user in the app.
-- The KKR, NU and RGTI stop tasks and the Nov 20 final-sale task were deleted after those positions closed.
+| Task | Schedule (ET) | What it does |
+|---|---|---|
+| NVDA 170/172 expiry alert (read-only) | Dec 17, 11:47am | Quotes the spread as one unit and reminds the user to close it before 1:15pm on Dec 18. No order step. |
 
-## Paused
+## Market calendar the prompts rely on
+- Closed Thursday 2026-11-26. Early close 1:00pm ET Friday 2026-11-27.
 
-- Daily real-money proposal, 12:41pm ET. Paused on 2026-11-11 until the paper test ends. Max loss $50, proposes only, needs an explicit yes.
-
-## Standing rules
-
-- Real trades: max loss $50 per trade, stop proposing after 3 losses in a row or a weekly realized loss over $60.
-- No naked short options. Spreads are closed before expiry to avoid assignment.
+## Files
+- `paper_trading/log.csv`: prose ledger, unchanged format.
+- `paper_trading/ledger_v2.csv` and `ledger.py`: structured ledger with worst-side and mid fills, one row per run, trade and action.
+- `paper_trading/snapshots/contracts.csv` and `snapshot.py`: 174 fixed contracts (nine tickers, Dec 18 and Jan 15 expiries, five strikes, puts and calls) quoted once a day. New expiries must be added before Dec 18.

@@ -17,7 +17,9 @@ Read this first when picking up the work.
 - The conditional TLT approval recorded earlier on 2026-11-15 is VOID. The Monday 9:47am task was changed to read-only. TLT 79/78 and XLF 59/60 are not eligible: no validated hypothesis supports them.
 - Limits: $45 max loss per new trade, $125 combined open risk across positions and working orders. The NVDA 170/172 spread (max loss about $80) is a per-trade breach; the user decides, nothing is to be closed or changed.
 - As of 2026-11-15 4:35pm ET the broker showed no working option orders. The 11/12 take-profits were day orders.
-- Phase 0 audit: `docs/phase0_audit_2026-11-15.md`. Waiting at Gate 1.
+- Phase 0 audit: `docs/phase0_audit_2026-11-15.md`. Gate 1 passed 2026-11-15: the user approved the task clean-up.
+- Done 2026-11-15: real SPY check and premarket briefing set to weekdays; the NVDA closing task with an order step paused and replaced by a read-only alert (Dec 17, research session); TLT/XLF re-price task deleted; structured ledger `paper_trading/ledger_v2.csv` (backfilled, 14 rows) and chain snapshot tool `paper_trading/snapshot.py` with 174 verified contracts added; `automation/scheduled_tasks.md` rewritten.
+- NOT done: routine prompts can only be edited from the paper desk conversation. The exact text to apply is in `docs/desk_prompt_changes_2026-11-15.md` (morning and close mark prompts, then drop the 3:47pm SPY check).
 
 ## Closed this week (realized, before fees)
 | Trade | Result |
