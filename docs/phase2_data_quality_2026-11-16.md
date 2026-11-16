@@ -50,7 +50,7 @@ Findings:
 3. No date found by search contradicted the list. One secondary page gave 2017 dates one day later than the Fed's tentative calendar quoted by another.
 4. Timing convention: CPI comes out at 8:30am ET and NVDA reports after the close, so a trade entered at the open of the CPI day or the NVDA reaction day is entered after the news. The filter still blocks those entries. That is conservative, not look-ahead.
 5. Known at the time: FOMC and CPI dates are published well ahead (the two shutdown-moved CPI dates in late 2025 are marked rescheduled). The date NVDA announced each report date is not available, so that part of the requirement cannot be met.
-6. 139 of 230 dates still rest on memory or a third-party calendar. One fetch each of the Fed calendar pages and the ALFRED CPI release-date file would settle FOMC and CPI. Both hosts are blocked.
+6. 140 of 230 dates still rest on memory or a third-party calendar. One fetch each of the Fed calendar pages and the ALFRED CPI release-date file would settle FOMC and CPI. Both hosts are blocked.
 
 ## Unresolved
 - SPY on 2026-06-26 closed 0.68% below the S&P 500 index move in both sources and recovered the next day. Cause not known.
