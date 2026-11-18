@@ -1,0 +1,10 @@
+test,trades,non_overlapping,win_pct,mean_pnl_usd,mean_minus_1.96se,avg_debit_usd,mean_pnl_pct_of_debit
+put_spread_signal_IS,101,45,37.6,-17.94,-24.67,53.22,-33.7
+put_spread_every_day_IS,1610,403,28.9,-18.4,-19.87,50.53,-36.4
+call_spread_signal_IS,101,45,51.5,-6.15,-12.85,52.94,-11.6
+put_spread_signal_OOS,20,13,10.0,-35.51,-47.58,52.99,-67.0
+put_spread_every_day_OOS,712,178,28.5,-19.02,-21.17,50.16,-37.9
+call_spread_signal_OOS,20,13,75.0,14.29,0.77,52.89,27.0
+put_spread_signal_ALL,121,58,33.1,-20.84,-26.9,53.18,-39.2
+put_spread_every_day_ALL,2322,581,28.8,-18.59,-19.8,50.42,-36.9
+call_spread_signal_ALL,121,58,55.4,-2.77,-8.93,52.93,-5.2
