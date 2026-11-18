@@ -19,6 +19,10 @@ Read this first when picking up the work.
 | RGTI 10.5P | +$35 |
 | NU 12.5C x2 | -$14 (sold by the agent without asking; the user did not want it sold) |
 
+## Live check 2026-11-18 12:16pm ET
+- Account $442.33 (cash $399.33, options $43). Only open real position: NVDA 170/172 call spread, value 0.425 mid / 0.39 at bid-ask (cost 0.80, about -$41). NVDA 151.64. No working orders.
+- Open risk counted at entry max loss: $80 of $125, so $45 room for one new trade. Recommendation on record: close NVDA (below 160, earnings pop faded); skip the SPY 727/726 put spread (sandbox backtest showed no edge, backtests/sandbox/).
+
 ## Standing rules from the user
 - Every real position gets a take-profit at 2x the fill price.
 - Real trades: max loss $45 per trade, $125 total open risk (set 2026-11-12; $100 was approved once for the NVDA spread). Kill switch: stop after 3 losses in a row or a weekly realized loss over $60.
