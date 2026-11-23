@@ -49,3 +49,11 @@ The one entry risks $95 to make $4.92 with a risk-neutral 83% chance of full pro
 - Aug, Sep and Oct 2026 CPI dates in `events.csv` were typed from memory and are marked unverified.
 - Option prices are modelled, not historical.
 - Costs come from one calm-morning snapshot.
+
+## 6. VRP study "Strategy B" put spread (2026-11-23) - `backtests/vrp_study/`
+Source: sam-bateman/vrp-harvesting-study (no license; rules re-implemented from the README, code not read). SPY + VIX daily from FMP 1993-2026, 403 monthly trades, OOS = last 120 (2016-11 to 2026-10). Modeled prices.
+- (A) study structure (-0.30 / -0.10 delta): OOS mean positive at all 4 IV settings (+$16.70 to +$157.53 per spread), but t-stats 0.3-2.9, return on risk negative at IV x1.0, and a random-direction spread made about the same. Worst trade about -$2,500; average max loss $1,715-2,308 per spread. Not tradable at this account's size.
+- (A36) reported 3.6% strike gap: fails (negative at x1.0).
+- (B) sized to $45 max loss: fails (1 of 4 settings positive); only 32-47 of 120 months tradable after costs.
+- One-month calibration (2026-10) vs real prints: the study's VIX pricing overstated the credit by 27-38%.
+- Conclusion: no edge at a $45 risk cap. The positive result at full size depends on the IV-over-realized assumption.
