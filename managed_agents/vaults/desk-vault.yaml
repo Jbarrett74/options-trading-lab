@@ -1,0 +1,5 @@
+display_name: options-desk-vault
+# Container only. Credentials are added separately and never written to this repo:
+#   GITHUB_TOKEN  - fine-grained PAT, repo Jbarrett74/options-trading-lab only, Contents: read and write. Allowed host: api.github.com
+#   FMP_API_KEY   - Financial Modeling Prep key. Allowed host: financialmodelingprep.com
+# See managed_agents/README.md for the commands.

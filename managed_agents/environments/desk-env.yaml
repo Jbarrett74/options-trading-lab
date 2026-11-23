@@ -1,0 +1,25 @@
+name: options-desk-env
+config:
+  type: cloud
+  networking:
+    type: limited
+    allow_package_managers: true
+    allow_mcp_servers: false
+    allowed_hosts:
+      - api.github.com
+      - codeload.github.com
+      - github.com
+      - raw.githubusercontent.com
+      - financialmodelingprep.com
+      - www.cnbc.com
+      - finance.yahoo.com
+      - www.investing.com
+      - www.reuters.com
+      - www.marketwatch.com
+      - www.federalreserve.gov
+      - www.bls.gov
+      - www.bea.gov
+      - www.kiplinger.com
+      - investinglive.com
+      - www.newsquawk.com
+      - economics.td.com
