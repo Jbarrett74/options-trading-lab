@@ -1,0 +1,587 @@
+<meta name="dash-one-writer">
+<meta name="dash-form" content="dashboard">
+<style>
+.od { display: flex; flex-direction: column; gap: var(--cds-gap-xl); color: var(--color-fg); font-family: var(--font-anthropic-sans); font-variant-numeric: tabular-nums; }
+.od-head { display: flex; flex-direction: column; gap: var(--cds-gap-sm); }
+.od-title { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
+.od-lede { margin: 0; color: var(--color-fg); max-width: 72ch; line-height: 1.5; }
+.od-meta { margin: 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.od-sec { display: flex; flex-direction: column; gap: var(--cds-gap-md); min-width: 0; }
+.od-sec > h2 { margin: 0; font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); }
+.od-sub { margin: 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); max-width: 80ch; line-height: 1.45; }
+.od-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--cds-gap-sm); }
+.od-kpi { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md); display: flex; flex-direction: column; gap: var(--cds-gap-xs); min-width: 0; }
+.od-kpi-l { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.od-kpi-v { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); line-height: 1.1; white-space: nowrap; }
+.od-kpi-n { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.od-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: flex; flex-direction: column; gap: var(--cds-gap-sm); min-width: 0; }
+.od-card h3 { margin: 0; font-size: var(--cds-font-size-body); font-weight: var(--cds-font-weight-medium); }
+.od-grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--cds-gap-md); }
+.od-chart { position: relative; width: 100%; min-height: 260px; }
+.od-chart svg { display: block; width: 100%; overflow: visible; }
+.od-chart .tick text, .od-axis-label { fill: var(--cds-text-secondary); font-size: var(--cds-font-size-caption); font-family: var(--font-anthropic-sans); }
+.od-chart .domain, .od-chart .tick line { stroke: var(--cds-chart-axis); }
+.od-chart .od-grid line { stroke: var(--cds-chart-grid); }
+.od-chart .od-grid .domain { display: none; }
+.od-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); box-shadow: var(--cds-shadow-popover); border-radius: var(--cds-radius); padding: var(--cds-pad-sm); font-size: var(--cds-font-size-caption); white-space: nowrap; z-index: 2; }
+.od-tip b { font-weight: var(--cds-font-weight-medium); }
+.od-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.od-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.od-legend i { display: inline-block; width: 14px; height: 3px; }
+.od-tablewrap { overflow-x: auto; min-width: 0; }
+.od-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); }
+.od-table th { text-align: left; font-weight: var(--cds-font-weight-medium); color: var(--color-fg-muted); padding: 6px 10px; border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+.od-table td { padding: 6px 10px; border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+.od-table td.od-wrap { white-space: normal; min-width: 220px; }
+.od-table .num { text-align: right; }
+.od-pos { color: var(--color-ok); }
+.od-neg { color: var(--color-bad); }
+.od-tag { display: inline-block; padding: 1px 6px; border-radius: 3px; border: 1px solid var(--color-border-line); font-size: var(--cds-font-size-caption); }
+.od-tag.ok { color: var(--color-ok); border-color: var(--color-ok); }
+.od-tag.bad { color: var(--color-bad); border-color: var(--color-bad); }
+.od-tag.warn { color: var(--color-warn); border-color: var(--color-warn); }
+.od-controls { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; }
+.od-seg { display: inline-flex; border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); overflow: hidden; }
+.od-seg button { font: inherit; font-size: var(--cds-font-size-caption); padding: 5px 14px; background: transparent; color: var(--color-fg-muted); border: 0; cursor: pointer; }
+.od-seg button + button { border-left: 1px solid var(--color-border-line); }
+.od-seg button[aria-pressed="true"] { background: var(--color-bg); color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+.od-seg button:focus-visible, .dash-select:focus-visible { outline: 2px solid var(--cds-chart-reference); outline-offset: 1px; }
+.od-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: var(--cds-gap-sm) var(--cds-gap-md); margin: 0; }
+.od-stats div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.od-stats dt { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.od-stats dd { margin: 0; font-size: var(--cds-font-size-body); font-weight: var(--cds-font-weight-medium); }
+.od-bar { height: 8px; background: var(--cds-chart-grid); border-radius: 2px; overflow: hidden; }
+.od-bar > i { display: block; height: 100%; background: var(--cds-chart-reference); }
+.od-goal { display: grid; grid-template-columns: minmax(120px, 1fr) 2fr auto; gap: var(--cds-gap-sm); align-items: center; font-size: var(--cds-font-size-caption); }
+.od-checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--cds-gap-xs); font-size: var(--cds-font-size-caption); }
+.od-checks li { display: grid; grid-template-columns: 110px 1fr; gap: var(--cds-gap-sm); align-items: start; }
+.od-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; line-height: 1.45; }
+details.od-details summary { cursor: pointer; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+details.od-details dl { font-size: var(--cds-font-size-caption); display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; }
+details.od-details dt { font-weight: var(--cds-font-weight-medium); }
+details.od-details dd { margin: 0; color: var(--color-fg-muted); }
+</style>
+
+<div class="od">
+  <header class="od-head" id="overview">
+    <h1 class="od-title">Options Desk Ledger</h1>
+    <p class="od-lede" data-read lang="en">Paper book at <b data-draw="t_total" data-source="book" data-field="total" data-row="0" class="dash-skeleton">—</b> at the bid/ask exit as of <b data-draw="t_date" data-source="book" data-field="date" data-row="0" class="dash-skeleton">—</b>. Directional spreads closed <b data-draw="t_n" data-source="dir_stats" data-field="n" data-row="0" class="dash-skeleton">—</b> trades for <b data-draw="t_dir" data-source="dir_stats" data-field="total_pnl" data-row="0" class="dash-skeleton">—</b>. Open credit spreads are marked at <b data-draw="t_cr" data-source="book" data-field="credit_open" data-row="0" class="dash-skeleton">—</b>. No strategy is close to the 100 closed trades needed to judge it.</p>
+    <p class="od-meta">Robinhood account ending 8530. Paper trades are simulated at conservative fills (pay the ask, receive the bid, $0.04 per leg). No order on this page was placed by an agent.</p>
+  </header>
+
+  <section class="od-sec" id="summary">
+    <div class="od-kpis">
+      <div class="od-kpi"><span class="od-kpi-l">Paper P&amp;L, total</span><span class="od-kpi-v dash-skeleton" data-draw="k_total" data-source="book" data-field="total" data-row="0">—</span><span class="od-kpi-n">Realized + open, bid/ask exit</span></div>
+      <div class="od-kpi"><span class="od-kpi-l">Max drawdown</span><span class="od-kpi-v dash-skeleton" data-draw="k_dd" data-source="book" data-field="max_dd" data-row="0">—</span><span class="od-kpi-n">From peak, daily close marks</span></div>
+      <div class="od-kpi"><span class="od-kpi-l">Directional win rate</span><span class="od-kpi-v dash-skeleton" data-draw="k_wr" data-source="dir_stats" data-field="win_rate" data-row="0">—</span><span class="od-kpi-n" data-draw="k_wr_n">—</span></div>
+      <div class="od-kpi"><span class="od-kpi-l">Mean P&amp;L per trade</span><span class="od-kpi-v dash-skeleton" data-draw="k_mean" data-source="dir_stats" data-field="mean_pnl" data-row="0">—</span><span class="od-kpi-n">Directional, after costs</span></div>
+      <div class="od-kpi"><span class="od-kpi-l">Profit factor</span><span class="od-kpi-v dash-skeleton" data-draw="k_pf" data-source="dir_stats" data-field="profit_factor" data-row="0">—</span><span class="od-kpi-n">Gross wins / gross losses</span></div>
+      <div class="od-kpi"><span class="od-kpi-l">Real P&amp;L, closed</span><span class="od-kpi-v dash-skeleton" data-draw="k_real" data-source="real_risk" data-field="realized" data-row="0">—</span><span class="od-kpi-n">Account ending 8530</span></div>
+    </div>
+  </section>
+
+  <section class="od-sec" id="performance">
+    <h2>Equity curve</h2>
+    <p class="od-sub">Cumulative paper P&amp;L at each day's last mark, valued at the conservative exit. Directional and credit arms include open positions. The 3- and 5-wide width test is excluded.</p>
+    <div class="od-card" id="equity-card">
+      <div class="od-legend"><span><i style="background: var(--color-fg)"></i>Total</span><span><i data-draw="sw0"></i>Directional</span><span><i data-draw="sw1"></i>Credit</span></div>
+      <div class="od-chart" data-draw="equity" data-source="equity"></div>
+    </div>
+  </section>
+
+  <section class="od-sec" id="directional">
+    <h2>Directional arm statistics</h2>
+    <p class="od-sub">SPY, QQQ and IWM debit spreads, 2026-11-11 to 2026-11-24. Sample statistics use a two-sided 95% Student-t interval on P&amp;L per trade.</p>
+    <div class="od-grid2">
+      <div class="od-card" id="dir-stats">
+        <h3>Per-trade distribution</h3>
+        <dl class="od-stats">
+          <div><dt>Closed trades</dt><dd data-draw="s_n" data-source="dir_stats" data-field="n" data-row="0">—</dd></div>
+          <div><dt>Wins / losses</dt><dd data-draw="s_wl">—</dd></div>
+          <div><dt>Mean P&amp;L</dt><dd data-draw="s_mean" data-source="dir_stats" data-field="mean_pnl" data-row="0">—</dd></div>
+          <div><dt>Std. deviation</dt><dd data-draw="s_sd" data-source="dir_stats" data-field="sd_pnl" data-row="0">—</dd></div>
+          <div><dt>t-statistic</dt><dd data-draw="s_t" data-source="dir_stats" data-field="t_stat" data-row="0">—</dd></div>
+          <div><dt>95% CI, low</dt><dd data-draw="s_lo" data-source="dir_stats" data-field="ci_low" data-row="0">—</dd></div>
+          <div><dt>95% CI, high</dt><dd data-draw="s_hi" data-source="dir_stats" data-field="ci_high" data-row="0">—</dd></div>
+          <div><dt>Mean return on risk</dt><dd data-draw="s_ror" data-source="dir_stats" data-field="mean_ror" data-row="0">—</dd></div>
+          <div><dt>Best trade</dt><dd data-draw="s_best" data-source="dir_stats" data-field="best" data-row="0">—</dd></div>
+          <div><dt>Worst trade</dt><dd data-draw="s_worst" data-source="dir_stats" data-field="worst" data-row="0">—</dd></div>
+          <div><dt>Avg win / avg loss</dt><dd data-draw="s_payoff" data-source="dir_stats" data-field="payoff" data-row="0">—</dd></div>
+          <div><dt>Bearish / bullish P&amp;L</dt><dd data-draw="s_side">—</dd></div>
+        </dl>
+        <p class="od-note" data-draw="s_read">—</p>
+      </div>
+      <div class="od-card" id="trade-bars">
+        <h3>Return on risk by trade</h3>
+        <div class="od-chart" data-draw="rorbars" data-source="trades"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="od-sec" id="blotter">
+    <h2>Trade blotter</h2>
+    <p class="od-sub">Every closed paper trade. Entry is the debit paid (or credit received) including fees; exit is the conservative close.</p>
+    <div class="od-card">
+      <div class="od-tablewrap">
+        <table class="od-table" data-source="trades" data-row-key="trade_id">
+          <thead><tr><th data-field="trade_id">ID</th><th data-field="arm">Arm</th><th data-field="ticker">Ticker</th><th data-field="structure">Structure</th><th data-field="opened">Opened</th><th data-field="closed">Closed</th><th data-field="entry" class="num">Entry</th><th data-field="exit" class="num">Exit</th><th data-field="max_loss" class="num">Max loss</th><th data-field="pnl" class="num">P&amp;L</th><th data-field="return_on_risk" class="num">Return on risk</th><th data-field="exit_reason">Exit</th></tr></thead>
+          <tbody data-draw="blotter"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="od-sec" id="gamma">
+    <h2>Dealer gamma exposure</h2>
+    <p class="od-sub">Gamma exposure per 1% move by strike, from open interest and option-implied volatility. Calls are counted as dealer-long and puts as dealer-short, a convention the data cannot confirm. Robinhood's premarket greeks were stale on this run, so the ALT method backs volatility out of the prior close's option prices.</p>
+    <div class="od-card" id="gamma-card">
+      <div class="od-controls">
+        <div class="od-seg" role="group" aria-label="Ticker">
+          <button type="button" data-gx-ticker="SPY" aria-pressed="true">SPY</button>
+          <button type="button" data-gx-ticker="QQQ" aria-pressed="false">QQQ</button>
+          <button type="button" data-gx-ticker="IWM" aria-pressed="false">IWM</button>
+        </div>
+        <select class="dash-select" id="gx-exp" aria-label="Expiry">
+          <option value="all">All expiries</option>
+          <option value="2026-11-24">2026-11-24</option>
+          <option value="2026-11-25">2026-11-25</option>
+        </select>
+        <span class="od-meta">Run: <span data-draw="g_run" data-source="gamma_levels" data-field="run" data-row="0">—</span></span>
+      </div>
+      <dl class="od-stats" id="gamma-stats">
+        <div><dt>Spot</dt><dd data-draw="g_spot" data-source="gamma_summary" data-field="spot">—</dd></div>
+        <div><dt>Net GEX, ALT</dt><dd data-draw="g_net" data-source="gamma_summary" data-field="net_alt_m">—</dd></div>
+        <div><dt>Net GEX, Robinhood</dt><dd data-draw="g_rh" data-source="gamma_summary" data-field="net_rh_m">—</dd></div>
+        <div><dt>Zero-gamma flip</dt><dd data-draw="g_flip" data-source="gamma_summary" data-field="flip">—</dd></div>
+        <div><dt>Call walls</dt><dd data-draw="g_cw" data-source="gamma_summary" data-field="call_walls">—</dd></div>
+        <div><dt>Put walls</dt><dd data-draw="g_pw" data-source="gamma_summary" data-field="put_walls">—</dd></div>
+      </dl>
+      <div class="od-legend"><span><i data-draw="gsw0"></i>Call GEX</span><span><i data-draw="gsw1"></i>Put GEX</span><span><i style="background: var(--color-fg)"></i>Net by strike</span><span><i style="background: var(--cds-chart-reference)"></i>Spot</span><span><i style="background: var(--color-warn)"></i>Flip</span></div>
+      <div class="od-chart" data-draw="gamma_chart" data-source="gamma gamma_levels" style="min-height: 320px"></div>
+      <p class="od-note">Net GEX sums all sampled strikes for the selected expiries. Summary figures above use all expiries in the run. The flip comes from a Black-Scholes spot sweep in the run's notes; IWM had none between 249 and 275.</p>
+    </div>
+  </section>
+
+  <section class="od-sec" id="width">
+    <h2>Credit spread width test</h2>
+    <p class="od-sub">SPY put credit spreads opened 2026-11-12 to 2026-11-16, expiring 2026-12-04. P&amp;L per $100 of maximum loss at the mid price, so widths compare on equal risk.</p>
+    <div class="od-card">
+      <div class="od-legend" data-draw="width_legend"></div>
+      <div class="od-chart" data-draw="width_chart" data-source="width"></div>
+    </div>
+  </section>
+
+  <section class="od-sec" id="goals">
+    <h2>Goals before real money</h2>
+    <p class="od-sub">A strategy moves to real money only when every criterion below is met. These are the desk's own rules.</p>
+    <div class="od-grid2">
+      <div class="od-card" id="sample-goal">
+        <h3>Sample size: 100 closed trades per strategy</h3>
+        <div class="od-goal"><span>Directional spreads</span><div class="od-bar"><i data-draw="gb_dir"></i></div><span data-draw="gl_dir" data-source="arms" data-field="closed" data-where="arm=directional">—</span></div>
+        <div class="od-goal"><span>Credit spreads</span><div class="od-bar"><i data-draw="gb_cr"></i></div><span data-draw="gl_cr" data-source="arms" data-field="closed" data-where="arm=credit">—</span></div>
+        <p class="od-note">At the November pace of about one closed trade per market day, 100 trades take roughly five months per strategy.</p>
+      </div>
+      <div class="od-card" id="criteria">
+        <h3>Directional arm against the criteria</h3>
+        <ul class="od-checks">
+          <li><span data-draw="c1">—</span><span>At least 100 closed trades</span></li>
+          <li><span data-draw="c2">—</span><span>Mean P&amp;L per trade above zero after bid/ask costs</span></li>
+          <li><span data-draw="c3">—</span><span>Lower bound of the 95% interval above zero</span></li>
+          <li><span class="od-tag">Not measured</span><span>Beats a baseline spread placed every day over the same dates</span></li>
+          <li><span class="od-tag">Not measured</span><span>Positive in rising, falling and flat markets (November was falling)</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="od-sec" id="real">
+    <h2>Real account</h2>
+    <p class="od-sub">Trades placed by the account owner in the Robinhood app. Limits: <b data-draw="lim_trade">—</b> max loss per trade and <b data-draw="lim_total">—</b> total open risk.</p>
+    <div class="od-grid2">
+      <div class="od-card" id="real-risk">
+        <h3>Risk now</h3>
+        <dl class="od-stats">
+          <div><dt>Open max loss</dt><dd data-draw="r_open" data-source="real_risk" data-field="open_max_loss" data-row="0">—</dd></div>
+          <div><dt>Open mark, bid/ask</dt><dd data-draw="r_mark" data-source="real_risk" data-field="open_pnl" data-row="0">—</dd></div>
+          <div><dt>Closed trades</dt><dd data-draw="r_n" data-source="real_risk" data-field="closed" data-row="0">—</dd></div>
+          <div><dt>Closed P&amp;L</dt><dd data-draw="r_real" data-source="real_risk" data-field="realized" data-row="0">—</dd></div>
+        </dl>
+        <div class="od-goal"><span>Open risk vs total limit</span><div class="od-bar"><i data-draw="rb_total"></i></div><span data-draw="rl_total">—</span></div>
+        <p class="od-note" data-draw="r_note">—</p>
+      </div>
+      <div class="od-card">
+        <h3>Positions and results</h3>
+        <div class="od-tablewrap">
+          <table class="od-table" data-source="real" data-row-key="symbol">
+            <thead><tr><th data-field="symbol">Symbol</th><th data-field="structure">Structure</th><th data-field="status">Status</th><th data-field="pnl" class="num">P&amp;L</th><th data-field="max_loss" class="num">Max loss</th></tr></thead>
+            <tbody data-draw="real_table"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="od-sec" id="research">
+    <h2>Backtest record</h2>
+    <p class="od-sub">Strategies tested before trading. Option prices in these tests are modeled, not historical quotes.</p>
+    <div class="od-card">
+      <div class="od-tablewrap">
+        <table class="od-table" data-source="backtests" data-row-key="order">
+          <thead><tr><th data-field="strategy">Strategy</th><th data-field="tested">Tested</th><th data-field="result">Result</th><th data-field="verdict">Verdict</th></tr></thead>
+          <tbody data-draw="bt_table"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <details class="od-details">
+    <summary>Definitions</summary>
+    <dl>
+      <dt>Bid/ask exit</dt><dd>Closing value if sold at the bid and bought back at the ask, plus fees. The conservative mark used everywhere on this page.</dd>
+      <dt>Return on risk</dt><dd>P&amp;L divided by the trade's maximum loss.</dd>
+      <dt>Profit factor</dt><dd>Sum of winning trades divided by the absolute sum of losing trades.</dd>
+      <dt>Max drawdown</dt><dd>Largest fall in total P&amp;L from a previous high, measured from a starting value of zero.</dd>
+      <dt>GEX</dt><dd>Gamma x open interest x 100 x spot squared x 1%, in dollars of delta change per 1% move.</dd>
+      <dt>Wall</dt><dd>A strike with one of the three largest call (or put) gamma exposures in the run.</dd>
+    </dl>
+  </details>
+</div>
+
+<script>
+// Fixed references the desk set (STATUS.md, 2026-11-12) and the sample goal.
+window.OD = { PER_TRADE_LIMIT: 45, TOTAL_LIMIT: 125, SAMPLE_GOAL: 100, gx: { ticker: 'SPY', exp: 'all' } };
+const n = (v) => (v === null || v === undefined || v === '' ? null : +v);
+const usd = (v, signed = true) => v === null || isNaN(v) ? '—' : (signed ? (v > 0 ? '+' : v < 0 ? '−' : '') : (v < 0 ? '−' : '')) + '$' + d3.format(',.2f')(Math.abs(v));
+const pct = (v, d = 1) => v === null || isNaN(v) ? '—' : (v > 0 ? '+' : v < 0 ? '−' : '') + d3.format(`.${d}f`)(Math.abs(v * 100)) + '%';
+const usdM = (v) => v === null || isNaN(v) ? '—' : (v < 0 ? '−' : '+') + '$' + d3.format(',.1f')(Math.abs(v)) + 'M';
+const tone = (el, v) => { el.classList.toggle('od-pos', v > 0); el.classList.toggle('od-neg', v < 0); };
+window.ODf = { n, usd, pct, usdM, tone };
+
+dash.calc('book', {
+  title: 'Book summary', description: 'Latest total paper P&L and the largest drawdown, from the daily equity file.',
+  inputs: ['equity'],
+  fn: (equity) => {
+    if (!equity.length) return [];
+    let peak = 0, maxDd = 0, ddDate = null;
+    for (const r of equity) { const t = +r.total; if (t > peak) peak = t; if (t - peak < maxDd) { maxDd = t - peak; ddDate = r.date; } }
+    const last = equity[equity.length - 1];
+    return [{ date: last.date, total: +last.total, directional: +last.directional_realized + +last.directional_open, credit_open: +last.credit_open, credit_realized: +last.credit_realized, max_dd: +maxDd.toFixed(2), max_dd_date: ddDate, peak: +peak.toFixed(2) }];
+  }
+});
+
+dash.calc('dir_stats', {
+  title: 'Directional arm statistics', description: 'Win rate, mean, spread and a 95% Student-t interval of P&L for closed directional trades.',
+  inputs: ['trades'],
+  fn: (trades) => {
+    const d = trades.filter((t) => t.arm === 'directional');
+    const k = d.length; if (!k) return [];
+    const p = d.map((t) => +t.pnl), ror = d.map((t) => +t.return_on_risk);
+    const mean = d3.mean(p), sd = k > 1 ? d3.deviation(p) : 0, se = sd / Math.sqrt(k);
+    const tcrit = [12.706, 4.303, 3.182, 2.776, 2.571, 2.447, 2.365, 2.306, 2.262, 2.228, 2.201, 2.179, 2.16, 2.145, 2.131, 2.12, 2.11, 2.101, 2.093, 2.086, 2.08, 2.074, 2.069, 2.064, 2.06, 2.056, 2.052, 2.048, 2.045, 2.042][k - 2] ?? 1.96;
+    const wins = p.filter((x) => x > 0), losses = p.filter((x) => x <= 0);
+    const r2 = (x) => +x.toFixed(2);
+    return [{
+      n: k, wins: wins.length, losses: losses.length, win_rate: +(wins.length / k).toFixed(4),
+      total_pnl: r2(d3.sum(p)), mean_pnl: r2(mean), sd_pnl: r2(sd), t_stat: se ? +(mean / se).toFixed(2) : null,
+      ci_low: r2(mean - tcrit * se), ci_high: r2(mean + tcrit * se), mean_ror: +d3.mean(ror).toFixed(4),
+      best: r2(d3.max(p)), worst: r2(d3.min(p)),
+      profit_factor: losses.length ? +(d3.sum(wins) / Math.abs(d3.sum(losses))).toFixed(2) : null,
+      payoff: losses.length && wins.length ? +(d3.mean(wins) / Math.abs(d3.mean(losses))).toFixed(2) : null,
+      bearish_pnl: r2(d3.sum(d.filter((t) => t.side === 'bearish'), (t) => +t.pnl)),
+      bullish_pnl: r2(d3.sum(d.filter((t) => t.side === 'bullish'), (t) => +t.pnl)),
+      bearish_n: d.filter((t) => t.side === 'bearish').length, bullish_n: d.filter((t) => t.side === 'bullish').length
+    }];
+  }
+});
+
+dash.calc('arms', {
+  title: 'Closed trades by arm', description: 'Closed paper trades and realized P&L for each strategy arm.',
+  inputs: ['trades'],
+  fn: (trades) => ['directional', 'credit'].map((arm) => {
+    const t = trades.filter((r) => r.arm === arm);
+    return { arm, closed: t.length, realized: +d3.sum(t, (r) => +r.pnl).toFixed(2) };
+  })
+});
+
+dash.calc('real_risk', {
+  title: 'Real account risk', description: 'Open maximum loss, open mark and closed P&L of real trades.',
+  inputs: ['real'],
+  fn: (real) => {
+    const open = real.filter((r) => r.status === 'open'), closed = real.filter((r) => r.status === 'closed');
+    return [{ open_max_loss: +d3.sum(open, (r) => +r.max_loss).toFixed(2), open_pnl: +d3.sum(open, (r) => +r.pnl).toFixed(2), closed: closed.length, realized: +d3.sum(closed, (r) => +r.pnl).toFixed(2), largest_open: d3.max(open, (r) => +r.max_loss) ?? 0 }];
+  }
+});
+
+dash.calc('gamma_summary', {
+  title: 'Gamma summary by ticker', description: 'Net gamma exposure in $M per 1% move, and the three largest call and put strikes, across all expiries in the run.',
+  inputs: ['gamma', 'gamma_levels'],
+  fn: (gamma, levels) => levels.map((lv) => {
+    const g = gamma.filter((r) => r.ticker === lv.ticker);
+    const byStrike = (type) => d3.rollups(g.filter((r) => r.type === type), (v) => d3.sum(v, (r) => +r.gex_alt), (r) => +r.strike);
+    const calls = byStrike('call').sort((a, b) => b[1] - a[1]).slice(0, 3).map((x) => x[0]);
+    const puts = byStrike('put').sort((a, b) => a[1] - b[1]).slice(0, 3).map((x) => x[0]);
+    return { ticker: lv.ticker, spot: +lv.spot, net_alt_m: +(d3.sum(g, (r) => +r.gex_alt) / 1e6).toFixed(1), net_rh_m: +(+lv.net_gex_rh / 1e6).toFixed(1), flip: lv.flip_alt === '' || lv.flip_alt == null ? null : +lv.flip_alt, call_walls: calls.join(' · '), put_walls: puts.join(' · ') };
+  })
+});
+
+// ---- small drawing helpers
+function textDraw(name, src, pick, fmt, colorize) {
+  dash.draw(name, (el) => {
+    const s = dash.data(src);
+    if (s.status !== 'loading') el.classList.remove('dash-skeleton');
+    const row = s.status === 'ok' && s.data && s.data.length ? pick(s.data) : null;
+    if (!row) { el.textContent = '—'; tone(el, 0); return; }
+    const v = row.v; el.textContent = fmt(v); if (colorize) tone(el, v); else tone(el, 0);
+  });
+}
+const first = (f) => (rows) => ({ v: rows[0][f] });
+textDraw('t_total', 'book', first('total'), usd, true);
+textDraw('t_date', 'book', first('date'), (v) => v, false);
+textDraw('t_n', 'dir_stats', first('n'), (v) => String(v), false);
+textDraw('t_dir', 'dir_stats', first('total_pnl'), usd, true);
+textDraw('t_cr', 'book', first('credit_open'), usd, true);
+textDraw('k_total', 'book', first('total'), usd, true);
+textDraw('k_dd', 'book', first('max_dd'), (v) => usd(v), true);
+textDraw('k_wr', 'dir_stats', first('win_rate'), (v) => d3.format('.1%')(v), false);
+textDraw('k_mean', 'dir_stats', first('mean_pnl'), usd, true);
+textDraw('k_pf', 'dir_stats', first('profit_factor'), (v) => v === null ? '—' : d3.format('.2f')(v), false);
+textDraw('k_real', 'real_risk', first('realized'), usd, true);
+textDraw('s_n', 'dir_stats', first('n'), String, false);
+textDraw('s_mean', 'dir_stats', first('mean_pnl'), usd, true);
+textDraw('s_sd', 'dir_stats', first('sd_pnl'), (v) => usd(v, false), false);
+textDraw('s_t', 'dir_stats', first('t_stat'), (v) => v === null ? '—' : d3.format('.2f')(v), false);
+textDraw('s_lo', 'dir_stats', first('ci_low'), usd, true);
+textDraw('s_hi', 'dir_stats', first('ci_high'), usd, true);
+textDraw('s_ror', 'dir_stats', first('mean_ror'), (v) => pct(v, 1), true);
+textDraw('s_best', 'dir_stats', first('best'), usd, true);
+textDraw('s_worst', 'dir_stats', first('worst'), usd, true);
+textDraw('s_payoff', 'dir_stats', first('payoff'), (v) => v === null ? '—' : d3.format('.2f')(v) + 'x', false);
+textDraw('r_open', 'real_risk', first('open_max_loss'), (v) => usd(v, false), false);
+textDraw('r_mark', 'real_risk', first('open_pnl'), usd, true);
+textDraw('r_n', 'real_risk', first('closed'), String, false);
+textDraw('r_real', 'real_risk', first('realized'), usd, true);
+textDraw('g_run', 'gamma_levels', first('run'), (v) => v, false);
+dash.draw('lim_trade', (el) => { el.textContent = '$' + OD.PER_TRADE_LIMIT; });
+dash.draw('lim_total', (el) => { el.textContent = '$' + OD.TOTAL_LIMIT; });
+
+dash.draw('k_wr_n', (el) => { const s = dash.data('dir_stats'); el.textContent = s.status === 'ok' && s.data.length ? `${s.data[0].wins} of ${s.data[0].n} directional trades` : '—'; });
+dash.draw('s_wl', (el) => { const s = dash.data('dir_stats'); el.textContent = s.status === 'ok' && s.data.length ? `${s.data[0].wins} / ${s.data[0].losses}` : '—'; });
+dash.draw('s_side', (el) => { const s = dash.data('dir_stats'); if (s.status !== 'ok' || !s.data.length) { el.textContent = '—'; return; } const r = s.data[0]; el.textContent = `${usd(r.bearish_pnl)} (${r.bearish_n}) / ${usd(r.bullish_pnl)} (${r.bullish_n})`; });
+dash.draw('s_read', (el) => {
+  const s = dash.data('dir_stats'); if (s.status !== 'ok' || !s.data.length) { el.textContent = '—'; return; }
+  const r = s.data[0];
+  el.textContent = r.ci_low > 0
+    ? `The 95% interval for mean P&L lies above zero on ${r.n} trades. The sample is still below the 100-trade goal.`
+    : `The 95% interval for mean P&L runs from ${usd(r.ci_low)} to ${usd(r.ci_high)} and includes zero, so ${r.n} trades cannot separate skill from chance.`;
+});
+
+['sw0', 'sw1', 'gsw0', 'gsw1'].forEach((nm, i) => dash.draw(nm, (el) => { el.style.background = dash.colors[i % 2]; }));
+
+// ---- tooltip helper
+function tipIn(box) { let t = box.querySelector('.od-tip'); if (!t) { t = document.createElement('div'); t.className = 'od-tip'; t.hidden = true; box.appendChild(t); } return t; }
+function placeTip(box, tip, x, y) { const bw = box.clientWidth; tip.hidden = false; const tw = tip.offsetWidth; let left = x + 12; if (left + tw > bw) left = Math.max(0, x - tw - 12); tip.style.left = left + 'px'; tip.style.top = Math.max(0, y - 10) + 'px'; }
+function tipRows(tip, title, rows) { tip.replaceChildren(); const h = document.createElement('div'); const b = document.createElement('b'); b.textContent = title; h.appendChild(b); tip.appendChild(h); rows.forEach(([k, v]) => { const d = document.createElement('div'); d.textContent = `${k}: ${v}`; tip.appendChild(d); }); }
+
+// ---- line chart (equity, width test)
+function lineChart(el, series, { yFmt, height = 260, title }) {
+  const w = el.clientWidth; if (!w) return;
+  const all = series.flatMap((s) => s.pts);
+  if (!all.length) { el.textContent = '—'; return; }
+  el.replaceChildren();
+  const svg = d3.select(el).append('svg').attr('role', 'img').attr('aria-label', title).attr('height', height);
+  const yExt = d3.extent(all, (p) => p.y); const y0 = Math.min(0, yExt[0]), y1 = Math.max(0, yExt[1]);
+  const y = d3.scaleLinear().domain([y0, y1]).nice(5);
+  const probe = svg.append('g'); let ml = 0;
+  y.ticks(5).forEach((t) => { const tx = probe.append('text').attr('class', 'od-axis-label').text(yFmt(t)); ml = Math.max(ml, tx.node().getComputedTextLength()); });
+  probe.remove();
+  const m = { t: 10, r: 16, b: 26, l: ml + 12 };
+  const x = d3.scaleUtc().domain(d3.extent(all, (p) => p.x)).range([m.l, w - m.r]);
+  y.range([height - m.b, m.t]);
+  svg.append('g').attr('class', 'od-grid').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(w - m.l - m.r)).tickFormat(''));
+  svg.append('g').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(yFmt).tickSizeOuter(0));
+  const dates = [...new Set(all.map((p) => +p.x))].sort((a, b) => a - b).map((v) => new Date(v));
+  const every = Math.max(1, Math.ceil(dates.length / Math.max(2, Math.floor((w - m.l) / 70))));
+  svg.append('g').attr('transform', `translate(0,${height - m.b})`).call(d3.axisBottom(x).tickValues(dates.filter((_, i) => i % every === 0)).tickFormat(d3.utcFormat('%b %-d')).tickSizeOuter(0));
+  svg.append('line').attr('x1', m.l).attr('x2', w - m.r).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-reference)');
+  const line = d3.line().x((p) => x(p.x)).y((p) => y(p.y));
+  series.forEach((s) => {
+    svg.append('path').datum(s.pts).attr('fill', 'none').style('stroke', s.color).attr('stroke-width', s.width || 1.75).attr('d', line);
+    svg.append('g').selectAll('rect').data(s.pts.slice(-1)).join('rect').attr('x', (p) => x(p.x) - 2.5).attr('y', (p) => y(p.y) - 2.5).attr('width', 5).attr('height', 5).style('fill', s.color);
+  });
+  const tip = tipIn(el); const guide = svg.append('line').attr('y1', m.t).attr('y2', height - m.b).style('stroke', 'var(--cds-chart-axis)').attr('visibility', 'hidden');
+  svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', w - m.l - m.r).attr('height', height - m.t - m.b).attr('fill', 'transparent')
+    .on('pointermove', (ev) => {
+      const [px, py] = d3.pointer(ev); const xd = x.invert(px);
+      const dt = dates.reduce((a, b) => Math.abs(b - xd) < Math.abs(a - xd) ? b : a);
+      guide.attr('x1', x(dt)).attr('x2', x(dt)).attr('visibility', 'visible');
+      tipRows(tip, d3.utcFormat('%a %b %-d, %Y')(dt), series.map((s) => { const p = s.pts.find((q) => +q.x === +dt); return [s.name, p ? yFmt(p.y, true) : 'no mark']; }));
+      placeTip(el, tip, px, py);
+    })
+    .on('pointerleave', () => { tip.hidden = true; guide.attr('visibility', 'hidden'); });
+}
+
+dash.draw('equity', (el) => {
+  const s = dash.data('equity');
+  if (s.status !== 'ok' || !s.data.length) { el.textContent = s.status === 'error' ? 'The equity file failed to load.' : '—'; return; }
+  const P = (k) => s.data.map((r) => ({ x: d3.utcParse('%Y-%m-%d')(r.date), y: k(r) }));
+  lineChart(el, [
+    { name: 'Total', color: 'var(--color-fg)', width: 2.25, pts: P((r) => +r.total) },
+    { name: 'Directional', color: dash.colors[0], pts: P((r) => +r.directional_realized + +r.directional_open) },
+    { name: 'Credit', color: dash.colors[1], pts: P((r) => +r.credit_realized + +r.credit_open) }
+  ], { yFmt: (v, exact) => exact ? usd(v) : (v < 0 ? '−$' : '$') + d3.format(',.0f')(Math.abs(v)), title: 'Cumulative paper P&L by arm, daily' });
+});
+
+dash.draw('width_legend', (el) => {
+  const s = dash.data('width'); el.replaceChildren(); if (s.status !== 'ok') { el.textContent = ''; return; }
+  [...new Set(s.data.map((r) => r.spread))].forEach((nm, i) => { const sp = document.createElement('span'); const ic = document.createElement('i'); ic.style.background = dash.colors[i % dash.colors.length]; sp.append(ic, nm); el.appendChild(sp); });
+});
+dash.draw('width_chart', (el) => {
+  const s = dash.data('width');
+  if (s.status !== 'ok' || !s.data.length) { el.textContent = s.status === 'error' ? 'The width test file failed to load.' : '—'; return; }
+  const names = [...new Set(s.data.map((r) => r.spread))];
+  lineChart(el, names.map((nm, i) => ({ name: nm, color: dash.colors[i % dash.colors.length], pts: s.data.filter((r) => r.spread === nm).map((r) => ({ x: d3.utcParse('%Y-%m-%d')(r.date), y: +r.pnl_per_100_risk_mid })) })),
+    { yFmt: (v, exact) => (v < 0 ? '−$' : '$') + d3.format(exact ? ',.2f' : ',.0f')(Math.abs(v)), title: 'Width test P&L per $100 of max loss by spread' });
+});
+
+dash.draw('rorbars', (el) => {
+  const s = dash.data('trades');
+  if (s.status !== 'ok' || !s.data.length) { el.textContent = s.status === 'error' ? 'The trades file failed to load.' : '—'; return; }
+  const d = s.data.filter((t) => t.arm === 'directional');
+  const w = el.clientWidth, h = 260; if (!w) return; el.replaceChildren();
+  const svg = d3.select(el).append('svg').attr('role', 'img').attr('aria-label', 'Return on risk for each directional trade').attr('height', h);
+  const m = { t: 16, r: 8, b: 40, l: 44 };
+  const x = d3.scaleBand().domain(d.map((t) => t.trade_id)).range([m.l, w - m.r]).padding(0.25);
+  const v = d.map((t) => +t.return_on_risk); const y = d3.scaleLinear().domain([Math.min(0, d3.min(v)), Math.max(0, d3.max(v))]).nice(4).range([h - m.b, m.t]);
+  svg.append('g').attr('class', 'od-grid').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(4).tickSize(-(w - m.l - m.r)).tickFormat(''));
+  svg.append('g').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(4).tickFormat(d3.format('.0%')).tickSizeOuter(0));
+  svg.append('line').attr('x1', m.l).attr('x2', w - m.r).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-reference)');
+  const tip = tipIn(el);
+  svg.append('g').selectAll('rect').data(d).join('rect')
+    .attr('x', (t) => x(t.trade_id)).attr('width', x.bandwidth())
+    .attr('y', (t) => y(Math.max(0, +t.return_on_risk))).attr('height', (t) => Math.abs(y(+t.return_on_risk) - y(0)))
+    .style('fill', (t) => +t.pnl > 0 ? 'var(--color-ok)' : 'var(--color-bad)')
+    .on('pointermove', (ev, t) => { const [px, py] = d3.pointer(ev, el); tipRows(tip, `${t.ticker} ${t.side}, closed ${t.closed}`, [['Return on risk', pct(+t.return_on_risk)], ['P&L', usd(+t.pnl)], ['Max loss', usd(+t.max_loss, false)], ['Exit', t.exit_reason]]); placeTip(el, tip, px, py); })
+    .on('pointerleave', () => { tip.hidden = true; });
+  const showVals = x.bandwidth() > 26;
+  if (showVals) svg.append('g').selectAll('text').data(d).join('text').attr('class', 'od-axis-label').attr('text-anchor', 'middle')
+    .attr('x', (t) => x(t.trade_id) + x.bandwidth() / 2).attr('y', (t) => +t.return_on_risk >= 0 ? y(+t.return_on_risk) - 4 : y(+t.return_on_risk) + 12).text((t) => d3.format('.0%')(+t.return_on_risk));
+  const xa = svg.append('g').attr('transform', `translate(0,${h - m.b})`).call(d3.axisBottom(x).tickFormat((id) => { const t = d.find((r) => r.trade_id === id); return t.ticker; }).tickSizeOuter(0));
+  xa.selectAll('.tick').append('text').attr('class', 'od-axis-label').attr('y', 26).attr('text-anchor', 'middle').text((id) => d3.utcFormat('%-m/%-d')(d3.utcParse('%Y-%m-%d')(d.find((r) => r.trade_id === id).opened)));
+});
+
+dash.draw('blotter', (tb) => {
+  const s = dash.data('trades'); tb.replaceChildren();
+  if (s.status !== 'ok') { if (s.status === 'error') { const tr = tb.insertRow(); const td = tr.insertCell(); td.colSpan = 12; td.textContent = 'The trades file failed to load.'; } return; }
+  [...s.data].reverse().forEach((t) => {
+    const tr = tb.insertRow(); tr.dataset.key = t.trade_id;
+    const cells = [t.trade_id, t.arm, t.ticker, t.structure, t.opened, t.closed, n(t.entry)?.toFixed(4), n(t.exit)?.toFixed(4), usd(+t.max_loss, false), usd(+t.pnl), pct(+t.return_on_risk), t.exit_reason];
+    cells.forEach((c, i) => { const td = tr.insertCell(); td.textContent = c ?? '—'; if (i >= 6 && i <= 10) td.className = 'num'; if (i === 9 || i === 10) tone(td, +t.pnl); });
+  });
+});
+
+dash.draw('real_table', (tb) => {
+  const s = dash.data('real'); tb.replaceChildren(); if (s.status !== 'ok') return;
+  s.data.forEach((r) => {
+    const tr = tb.insertRow(); tr.dataset.key = r.symbol;
+    const cells = [r.symbol, r.structure, r.status, usd(n(r.pnl)), n(r.max_loss) === null || isNaN(n(r.max_loss)) ? 'not found' : usd(n(r.max_loss), false)];
+    cells.forEach((c, i) => { const td = tr.insertCell(); td.textContent = c; if (i >= 3) td.className = 'num'; if (i === 3) tone(td, n(r.pnl)); if (i === 2) { td.textContent = ''; const tg = document.createElement('span'); tg.className = 'od-tag' + (r.status === 'open' ? ' warn' : ''); tg.textContent = c; td.appendChild(tg); } });
+  });
+});
+
+dash.draw('bt_table', (tb) => {
+  const s = dash.data('backtests'); tb.replaceChildren(); if (s.status !== 'ok') return;
+  s.data.forEach((r) => {
+    const tr = tb.insertRow(); tr.dataset.key = r.order;
+    [r.strategy, r.tested, r.result].forEach((c, i) => { const td = tr.insertCell(); td.textContent = c; if (i === 2) td.className = 'od-wrap'; });
+    const td = tr.insertCell(); const tg = document.createElement('span'); tg.className = 'od-tag ' + (r.verdict === 'Not tradable' ? 'warn' : 'bad'); tg.textContent = r.verdict; td.appendChild(tg);
+  });
+});
+
+function goalBar(nameBar, nameLbl, arm) {
+  dash.draw(nameBar, (el) => { const s = dash.data('arms'); const r = s.status === 'ok' ? s.data.find((x) => x.arm === arm) : null; el.style.width = r ? Math.min(100, (r.closed / OD.SAMPLE_GOAL) * 100) + '%' : '0%'; });
+  dash.draw(nameLbl, (el) => { const s = dash.data('arms'); const r = s.status === 'ok' ? s.data.find((x) => x.arm === arm) : null; el.textContent = r ? `${r.closed} / ${OD.SAMPLE_GOAL}` : '—'; });
+}
+goalBar('gb_dir', 'gl_dir', 'directional');
+goalBar('gb_cr', 'gl_cr', 'credit');
+
+function check(name, test) {
+  dash.draw(name, (el) => {
+    const s = dash.data('dir_stats'); el.replaceChildren(); const tg = document.createElement('span');
+    if (s.status !== 'ok' || !s.data.length) { tg.className = 'od-tag'; tg.textContent = '—'; el.appendChild(tg); return; }
+    const ok = test(s.data[0]); tg.className = 'od-tag ' + (ok ? 'ok' : 'bad'); tg.textContent = ok ? 'Met' : 'Not met'; el.appendChild(tg);
+  });
+}
+check('c1', (r) => r.n >= OD.SAMPLE_GOAL);
+check('c2', (r) => r.mean_pnl > 0);
+check('c3', (r) => r.ci_low > 0);
+
+dash.draw('rb_total', (el) => { const s = dash.data('real_risk'); const v = s.status === 'ok' && s.data.length ? s.data[0].open_max_loss : 0; el.style.width = Math.min(100, (v / OD.TOTAL_LIMIT) * 100) + '%'; el.style.background = v > OD.TOTAL_LIMIT ? 'var(--color-bad)' : 'var(--cds-chart-reference)'; });
+dash.draw('rl_total', (el) => { const s = dash.data('real_risk'); el.textContent = s.status === 'ok' && s.data.length ? `$${d3.format(',.0f')(s.data[0].open_max_loss)} / $${OD.TOTAL_LIMIT}` : '—'; });
+dash.draw('r_note', (el) => {
+  const s = dash.data('real_risk'); if (s.status !== 'ok' || !s.data.length) { el.textContent = '—'; return; }
+  const r = s.data[0];
+  el.textContent = r.largest_open > OD.PER_TRADE_LIMIT
+    ? `The largest open position risks $${d3.format(',.0f')(r.largest_open)}, above the $${OD.PER_TRADE_LIMIT} per-trade limit. It was opened under a one-time $100 approval before the limit was set.`
+    : `Every open position is within the $${OD.PER_TRADE_LIMIT} per-trade limit.`;
+});
+
+// ---- gamma
+function gxRow() { const s = dash.data('gamma_summary'); return s.status === 'ok' ? s.data.find((r) => r.ticker === OD.gx.ticker) : null; }
+function gxText(name, field, fmt) {
+  dash.draw(name, (el) => { el.setAttribute('data-where', 'ticker=' + OD.gx.ticker); const r = gxRow(); el.textContent = r ? fmt(r[field]) : '—'; if (field === 'net_alt_m' || field === 'net_rh_m') tone(el, r ? r[field] : 0); });
+}
+gxText('g_spot', 'spot', (v) => '$' + d3.format(',.2f')(v));
+gxText('g_net', 'net_alt_m', usdM);
+gxText('g_rh', 'net_rh_m', usdM);
+gxText('g_flip', 'flip', (v) => v === null ? 'None in range' : '$' + d3.format(',.2f')(v));
+gxText('g_cw', 'call_walls', (v) => v || '—');
+gxText('g_pw', 'put_walls', (v) => v || '—');
+
+dash.draw('gamma_chart', (el) => {
+  const s = dash.data('gamma'), lv = dash.data('gamma_levels');
+  if (s.status !== 'ok' || lv.status !== 'ok') { el.textContent = s.status === 'error' || lv.status === 'error' ? 'The gamma file failed to load.' : '—'; return; }
+  const level = lv.data.find((r) => r.ticker === OD.gx.ticker);
+  const rows = s.data.filter((r) => r.ticker === OD.gx.ticker && (OD.gx.exp === 'all' || r.expiry === OD.gx.exp));
+  if (!rows.length) { el.textContent = 'No strikes for this expiry in the run.'; return; }
+  const strikes = d3.rollups(rows, (v) => ({ call: d3.sum(v.filter((r) => r.type === 'call'), (r) => +r.gex_alt), put: d3.sum(v.filter((r) => r.type === 'put'), (r) => +r.gex_alt), oi: d3.sum(v, (r) => +r.open_interest) }), (r) => +r.strike)
+    .map(([k, v]) => ({ strike: k, ...v, net: v.call + v.put })).sort((a, b) => a.strike - b.strike);
+  const w = el.clientWidth, h = 320; if (!w) return; el.replaceChildren();
+  const svg = d3.select(el).append('svg').attr('role', 'img').attr('aria-label', `${OD.gx.ticker} gamma exposure by strike`).attr('height', h);
+  const fmtM = (v) => (v < 0 ? '−' : '') + '$' + d3.format(',.0f')(Math.abs(v / 1e6)) + 'M';
+  const y = d3.scaleLinear().domain([d3.min(strikes, (d) => Math.min(d.put, d.net, 0)), d3.max(strikes, (d) => Math.max(d.call, d.net, 0))]).nice(5);
+  const probe = svg.append('g'); let ml = 0; y.ticks(5).forEach((t) => { ml = Math.max(ml, probe.append('text').attr('class', 'od-axis-label').text(fmtM(t)).node().getComputedTextLength()); }); probe.remove();
+  const m = { t: 18, r: 10, b: 28, l: ml + 12 };
+  const lo = d3.min(strikes, (d) => d.strike), hi = d3.max(strikes, (d) => d.strike);
+  const step = d3.min(d3.pairs(strikes), ([a, b]) => b.strike - a.strike) || 1;
+  const x = d3.scaleLinear().domain([lo - step / 2, hi + step / 2]).range([m.l, w - m.r]);
+  y.range([h - m.b, m.t]);
+  const bw = Math.max(1, (x(lo + step) - x(lo)) * 0.7);
+  svg.append('g').attr('class', 'od-grid').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(w - m.l - m.r)).tickFormat(''));
+  svg.append('g').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(fmtM).tickSizeOuter(0));
+  svg.append('g').attr('transform', `translate(0,${h - m.b})`).call(d3.axisBottom(x).ticks(Math.max(3, Math.floor((w - m.l) / 60))).tickFormat(d3.format('d')).tickSizeOuter(0));
+  svg.append('line').attr('x1', m.l).attr('x2', w - m.r).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-reference)');
+  svg.append('g').selectAll('rect').data(strikes).join('rect').attr('x', (d) => x(d.strike) - bw / 2).attr('width', bw).attr('y', (d) => y(d.call)).attr('height', (d) => Math.max(0, y(0) - y(d.call))).style('fill', dash.colors[0]).style('opacity', 0.85);
+  svg.append('g').selectAll('rect').data(strikes).join('rect').attr('x', (d) => x(d.strike) - bw / 2).attr('width', bw).attr('y', y(0)).attr('height', (d) => Math.max(0, y(d.put) - y(0))).style('fill', dash.colors[1]).style('opacity', 0.85);
+  svg.append('path').datum(strikes).attr('fill', 'none').style('stroke', 'var(--color-fg)').attr('stroke-width', 1.5).attr('d', d3.line().x((d) => x(d.strike)).y((d) => y(d.net)));
+  const vline = (val, color, label, dash_) => {
+    if (val === null || val < lo - step / 2 || val > hi + step / 2) return;
+    svg.append('line').attr('x1', x(val)).attr('x2', x(val)).attr('y1', m.t).attr('y2', h - m.b).style('stroke', color).attr('stroke-width', 1.5).attr('stroke-dasharray', dash_ || null);
+    const tx = svg.append('text').attr('class', 'od-axis-label').attr('y', m.t - 6).text(label);
+    const tw = tx.node().getComputedTextLength(); tx.attr('x', Math.min(Math.max(m.l, x(val) - tw / 2), w - m.r - tw));
+  };
+  vline(+level.spot, 'var(--cds-chart-reference)', `Spot ${d3.format(',.2f')(+level.spot)}`);
+  if (level.flip_alt !== '' && level.flip_alt != null) vline(+level.flip_alt, 'var(--color-warn)', `Flip ${d3.format(',.2f')(+level.flip_alt)}`, '4 3');
+  const tip = tipIn(el);
+  svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', w - m.l - m.r).attr('height', h - m.t - m.b).attr('fill', 'transparent')
+    .on('pointermove', (ev) => { const [px, py] = d3.pointer(ev); const k = x.invert(px); const d = strikes.reduce((a, b) => Math.abs(b.strike - k) < Math.abs(a.strike - k) ? b : a); tipRows(tip, `Strike ${d.strike}`, [['Call GEX', fmtM(d.call)], ['Put GEX', fmtM(d.put)], ['Net', fmtM(d.net)], ['Open interest', d3.format(',')(d.oi)]]); placeTip(el, tip, px, py); })
+    .on('pointerleave', () => { tip.hidden = true; });
+});
+
+function gxRedraw() { ['gamma_chart', 'g_spot', 'g_net', 'g_rh', 'g_flip', 'g_cw', 'g_pw'].forEach((nm) => dash.draw(nm)); }
+document.querySelectorAll('[data-gx-ticker]').forEach((b) => b.addEventListener('click', () => {
+  OD.gx.ticker = b.getAttribute('data-gx-ticker');
+  document.querySelectorAll('[data-gx-ticker]').forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
+  gxRedraw();
+}));
+document.querySelectorAll('#gx-exp').forEach((sel) => sel.addEventListener('change', () => { OD.gx.exp = sel.value; dash.draw('gamma_chart'); }));
+</script>

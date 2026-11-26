@@ -1,0 +1,7 @@
+order,strategy,tested,data,result,verdict
+1,Long calls and puts,2026-11-11,"SPY, AAPL, NVDA, TSLA daily; modeled option prices","No entry rule beat a random-direction baseline out of sample; 87-100% of simulated $273 accounts went broke at $80 per trade",Failed
+2,Debit spreads at $50 risk or less,2026-11-11,Daily bars; modeled option prices,0% of configurations positive out of sample,Failed
+3,SPY and QQQ credit spreads,2026-11-12,"Daily bars 2017-06 to 2026-11, last 30% held out","0 of 48 setups passed the pre-written out-of-sample rule; result flips with the IV assumption",Failed
+4,20-ETF credit spread scan,2026-11-12,60 picks at IV 1.0/1.2/1.4,"3 passed every IV setting (EEM, XLU puts; XLE call); all 3 failed at live bid/ask on 2026-11-12",Failed live
+5,VRP put spread (study size),2026-11-23,"SPY + VIX 1993-2026, 120 out-of-sample months","Positive at all 4 IV settings but a random-direction spread made about the same; max loss $1,715-2,308 per spread",Not tradable
+6,VRP put spread ($45 size),2026-11-23,Same,"1 of 4 IV settings positive; only 32-47 of 120 months tradable after costs",Failed

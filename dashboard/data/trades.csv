@@ -1,0 +1,11 @@
+trade_id,arm,ticker,side,structure,opened,closed,entry,exit,max_loss,pnl,return_on_risk,exit_reason
+D-IWM-20261111,directional,IWM,bullish,bull call debit spread exp 2026-11-20,2026-11-11,2026-11-12,1.4708,0.6892,147.0,-78.08,-0.5312,Stop hit
+D-SPY-20261112,directional,SPY,bearish,bear put debit spread exp 2026-11-16,2026-11-12,2026-11-13,0.8808,1.3792,88.08,49.84,0.5658,Time exit
+D-QQQ-20261112,directional,QQQ,bearish,bear put debit spread exp 2026-11-16,2026-11-12,2026-11-13,0.9508,1.4092,95.08,45.84,0.4821,Time exit
+D-SPY-20261113,directional,SPY,bearish,bear put debit spread exp 2026-11-17,2026-11-13,2026-11-16,0.8708,1.1892,87.08,31.84,0.3656,Time exit
+D-QQQ-20261113,directional,QQQ,bearish,bear put debit spread exp 2026-11-17,2026-11-13,2026-11-16,0.9708,1.2292,97.08,25.84,0.2662,Time exit
+D-IWM-20261113,directional,IWM,bearish,bear put debit spread exp 2026-11-17,2026-11-13,2026-11-16,0.7908,0.9892,79.08,19.84,0.2509,Time exit
+D-SPY-20261118,directional,SPY,bearish,bear put debit spread exp 2026-11-24,2026-11-18,2026-11-20,0.9608,1.1992,96.08,23.84,0.2481,Take profit
+D-QQQ-20261118,directional,QQQ,bearish,bear put debit spread exp 2026-11-24,2026-11-18,2026-11-20,0.9908,1.1292,99.08,13.84,0.1397,Take profit
+D-IWM-20261120,directional,IWM,bearish,bear put debit spread exp 2026-11-25,2026-11-20,2026-11-24,0.8808,0.4592,88.08,-42.16,-0.4787,Time exit
+C-XLE-20261113,credit,XLE,short premium,bear call spread 70/71 exp 2026-12-04,2026-11-13,2026-11-25,0.0492,0.0208,95.08,2.84,0.0299,Take profit (tp50)
