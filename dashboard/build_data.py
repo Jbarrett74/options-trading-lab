@@ -90,4 +90,21 @@ with open(os.path.join(OUT, "gamma.csv"), "w", newline="") as f:
             g = r.get("gex_alt") or ""
             if g == "": continue
             w.writerow([t, spots[t], r["expiry"], r["type"], r["strike"], r["open_interest"], g, r.get("gex_rh") or ""])
+# ---- real account: closed trades from STATUS.md / real_trades.csv, open NVDA mark from the latest real_check
+real_closed = [
+    ["KKR", "105 call", "2026-11 (date not found)", "2026-11 (date not found)", "closed", "65.00", "not found", "STATUS.md"],
+    ["RGTI", "10.5 put", "2026-11 (date not found)", "2026-11 (date not found)", "closed", "35.00", "not found", "STATUS.md"],
+    ["NU", "12.5 call x2", "2026-11 (date not found)", "2026-11 (date not found)", "closed", "-14.00", "not found", "STATUS.md (sold by the agent without the user's approval)"],
+    ["SPY", "760/759 put debit spread", "2026-11-12", "2026-11-16", "closed", "43.84", "37.08", "paper_trading/real_trades.csv"],
+]
+nv = [r for r in rows if r["action"] == "real_check" and r["ticker"] == "NVDA"]
+with open(os.path.join(OUT, "real_trades.csv"), "w", newline="") as f:
+    w = csv.writer(f); w.writerow(["symbol", "structure", "opened", "closed", "status", "pnl", "max_loss", "source"])
+    w.writerows(real_closed)
+    if nv:
+        last = nv[-1]; m = cons.search(last["pnl"])
+        status = "closed" if "closed" in last["reason"].lower() and "still open" not in last["reason"].lower() else "open"
+        w.writerow(["NVDA", "170/172 call debit spread exp 2026-12-18", "2026-11-12", "", status,
+                    f"{float(m.group(1)):.2f}" if m else "not found", last["max_loss"],
+                    f"paper_trading/log.csv real_check {last['date']} ({last['price']})"])
 print(len(trades), "trades;", len(eq), "equity days;", len(wt), "width points")
